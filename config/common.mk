@@ -328,3 +328,6 @@ ifeq ($(EXTRA_FOD_ANIMATIONS),true)
 DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/fod
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay/fod
 endif
+
+# Include Legion QS Style files
+include vendor/legion/QS/qsstyle.mk
