@@ -137,7 +137,6 @@ PRODUCT_PACKAGES += \
     AccentHazedPink \
     AccentColdYellow \
     AccentNewHouseOrange \
-    AccentIllusionsPurple \
     AccentFlare \
     AccentSublime \
     AccentSincityRed \
@@ -147,7 +146,8 @@ PRODUCT_PACKAGES += \
     AccentShadesOfGrey \
     AccentSweetQPurple \
     AccentQGreen \
-    AccentElegantGreen
+    AccentElegantGreen \
+    AccentIllusionsPurple
 
  PRODUCT_PACKAGES += \
     PrimaryAlmostBlack \
