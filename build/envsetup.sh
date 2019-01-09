@@ -12,7 +12,7 @@ Additional functions:
 - githubremote:    Add git remote for PixelExperience Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
-- cmka:            Cleans and builds using mka.
+- cmka:            Cbeasts and builds using mka.
 - repodiff:        Diff 2 different branches or tags within the same repo
 - repolastsync:    Prints date and time of last repo sync.
 - reposync:        Parallel repo sync using ionice and SCHED_BATCH.
@@ -70,7 +70,7 @@ function breakfast()
     local variant=$2
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
-    for f in `/bin/ls vendor/lean/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/beast/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -91,7 +91,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch lean_$target-$variant
+            lunch beast_$target-$variant
         fi
     fi
     return $?
@@ -689,7 +689,7 @@ function pixelrebase() {
     fi
     echo "Uploading..."
     repo upload .
-    echo "Cleaning up..."
+    echo "Cbeasting up..."
     repo abandon tmprebase .
     cd $pwd
 }
@@ -703,17 +703,17 @@ function cmka() {
         for i in "$@"; do
             case $i in
                 bacon|otapackage|systemimage)
-                    mka installclean
+                    mka installcbeast
                     mka $i
                     ;;
                 *)
-                    mka clean-$i
+                    mka cbeast-$i
                     mka $i
                     ;;
             esac
         done
     else
-        mka clean
+        mka cbeast
         mka
     fi
 }
@@ -898,12 +898,12 @@ alias cmkap='dopush cmka'
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/lean/tools/repopick.py $@
+    $T/vendor/beast/tools/repopick.py $@
 }
 
 function losrepopick() {
     T=$(gettop)
-    $T/vendor/lean/build/tools/losrepopick.py $@
+    $T/vendor/beast/build/tools/losrepopick.py $@
 }
 
 function fixup_common_out_dir() {

@@ -1,4 +1,4 @@
-# Copyright (C) 2018 The LeanOS-Project
+# Copyright (C) 2019 BeastROMs
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # Required packages
 PRODUCT_PACKAGES += \
     Gallery2 \
-    Lean \
+    Beast \
     LatinIME \
     Launcher3 \
     LiveWallpapers \
@@ -28,18 +28,12 @@ PRODUCT_PACKAGES += \
 
 # Weather
 PRODUCT_COPY_FILES += \
- vendor/lean/prebuilt/common/etc/permissions/default-permissions/org.pixelexperience.weather.client.xml:system/etc/default-permissions/org.pixelexperience.weather.client.xml
+ vendor/beast/prebuilt/common/etc/permissions/default-permissions/org.pixelexperience.weather.client.xml:system/etc/default-permissions/org.pixelexperience.weather.client.xml
 
 # Weather
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.lean.weather.revision=2
+    ro.beast.weather.revision=2
 
-#ifeq ($(AOSIP_BUILDTYPE), Official)
-#    PRODUCT_PACKAGES += \
-#        Updater
-#endif
-
- # Required packages
 # Turbo
 PRODUCT_PACKAGES += \
     Turbo \

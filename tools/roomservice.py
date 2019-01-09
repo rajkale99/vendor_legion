@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Copyright (C) 2012-2013, The CyanogenMod Project
 # Copyright (C) 2012-2015, SlimRoms Project
-# Copyright (C) 2017, Lean
+# Copyright (C) 2017, BeastROMs
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,12 +41,12 @@ except ImportError:
     urllib.request = urllib2
 
 DEBUG = False
-default_manifest = ".repo/manifests/lean_default.xml"
-custom_local_manifest = ".repo/local_manifests/lean_manifest.xml"
-custom_default_revision = "8.1"
-custom_dependencies = "lean.dependencies"
-org_manifest = "LEAN-Devices"  # leave empty if org is provided in manifest
-org_display = "LEAN-Devices"  # needed for displaying
+default_manifest = ".repo/manifests/beast_default.xml"
+custom_local_manifest = ".repo/local_manifests/beast_manifest.xml"
+custom_default_revision = "pie"
+custom_dependencies = "beast.dependencies"
+org_manifest = "BEAST-Devices"  # leave empty if org is provided in manifest
+org_display = "BEAST-Devices"  # needed for displaying
 
 github_auth = None
 

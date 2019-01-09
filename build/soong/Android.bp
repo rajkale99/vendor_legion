@@ -1,14 +1,14 @@
 bootstrap_go_package {
-    name: "soong-lean",
-    pkgPath: "lean/soong/android",
+    name: "soong-beast",
+    pkgPath: "beast/soong/android",
     srcs: [
         "android/variable.go",
     ],
 }
 
 bootstrap_go_package {
-    name: "soong-lean-generator",
-    pkgPath: "lean/soong/generator",
+    name: "soong-beast-generator",
+    pkgPath: "beast/soong/generator",
     deps: [
         "blueprint",
         "blueprint-pathtools",
@@ -23,7 +23,7 @@ bootstrap_go_package {
     pluginFor: ["soong_build"],
 }
 
-lean_generator {
+beast_generator {
     name: "generated_kernel_includes",
 
     // The headers make command
