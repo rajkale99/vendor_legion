@@ -12,7 +12,7 @@ Additional functions:
 - githubremote:    Add git remote for PixelExperience Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
-- cmka:            Cbeasts and builds using mka.
+- cmka:            Cleans and builds using mka.
 - repodiff:        Diff 2 different branches or tags within the same repo
 - repolastsync:    Prints date and time of last repo sync.
 - reposync:        Parallel repo sync using ionice and SCHED_BATCH.
@@ -689,7 +689,7 @@ function pixelrebase() {
     fi
     echo "Uploading..."
     repo upload .
-    echo "Cbeasting up..."
+    echo "Cleaning up..."
     repo abandon tmprebase .
     cd $pwd
 }
@@ -703,17 +703,17 @@ function cmka() {
         for i in "$@"; do
             case $i in
                 bacon|otapackage|systemimage)
-                    mka installcbeast
+                    mka installclean
                     mka $i
                     ;;
                 *)
-                    mka cbeast-$i
+                    mka clean-$i
                     mka $i
                     ;;
             esac
         done
     else
-        mka cbeast
+        mka clean
         mka
     fi
 }
