@@ -91,6 +91,3 @@ include vendor/beast/config/beast_props.mk
 
 # Sounds
 include vendor/beast/config/sounds.mk
-
-# Inherit common beast sepolicy
-include device/beast/sepolicy/common/sepolicy.mk
