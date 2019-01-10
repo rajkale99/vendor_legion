@@ -148,3 +148,9 @@ PRODUCT_PACKAGES += \
     QSHeaderLightGrey \
     QSHeaderAccent \
     QSHeaderTransparent
+	
+#Font package
+PRODUCT_PACKAGES += \
+    Custom-Fonts
+	
+
