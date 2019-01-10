@@ -35,8 +35,8 @@ ifeq ($(BEAST_OFFICIAL),true)
       IS_OFFICIAL=true
       BEAST_BUILD_TYPE := OFFICIAL
 
-PRODUCT_PACKAGES += \
-    Updater
+#PRODUCT_PACKAGES += \
+#    Updater
 
     else
       BEAST_BUILD_TYPE := UNOFFICIAL
