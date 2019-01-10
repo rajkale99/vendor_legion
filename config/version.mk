@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-BEAST_MOD_VERSION = 9.0
+BEAST_MOD_VERSION = 1.0
 
 ifndef BEAST_BUILD_TYPE
     BEAST_BUILD_TYPE := UNOFFICIAL
@@ -29,7 +29,7 @@ endif
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
 ifeq ($(BEAST_OFFICIAL),true)
-   LIST = $(shell curl -s https://raw.githubusercontent.com/BeastRoms/androidvendor_beast/pie/beast.devices)
+   LIST = $(shell curl -s https://raw.githubusercontent.com/BeastRoms/vendor_beast/pie/beast.devices)
    FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
     ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
       IS_OFFICIAL=true
