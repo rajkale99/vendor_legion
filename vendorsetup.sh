@@ -1,2 +1,1 @@
-. "$(gettop)/vendor/beast/build/envsetup.sh"
- beast_device_combos
+add_lunch_combo beast_$device-userdebug

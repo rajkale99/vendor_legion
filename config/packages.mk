@@ -112,6 +112,32 @@ PRODUCT_PACKAGES += \
     procrank
 endif
 
+# Overlays
+PRODUCT_PACKAGES += \
+    AmberAccent \
+    BlueAccent \
+    BlueGreyAccent \
+    BrownAccent \
+    CyanAccent \
+    DeepOrangeAccent \
+    DeepPurpleAccent \
+    DuiDark \
+    GreenAccent \
+    GreyAccent \
+    IndigoAccent \
+    LightBlueAccent \
+    LightGreenAccent \
+    LimeAccent \
+    OrangeAccent \
+    PinkAccent \
+    PurpleAccent \
+    RedAccent \
+    RosyAccent \
+    SettingsDark \
+    SystemDark \
+    TealAccent \
+    YellowAccent
+
 # QS tile styles
 PRODUCT_PACKAGES += \
     QStileCircleTrim \
