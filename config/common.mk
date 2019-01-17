@@ -28,6 +28,10 @@ PRODUCT_COPY_FILES += \
     vendor/beast/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
 
+# priv-app permissions
+PRODUCT_COPY_FILES += \
+    vendor/beast/prebuilt/common/etc/permissions/privapp-permissions-beast.xml:system/etc/permissions/privapp-permissions-beast.xml
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     vendor/beast/overlay/common \
