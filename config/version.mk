@@ -12,18 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-BEAST_MOD_VERSION = 1.0
+BEAST_VERSION = 1.0
 
 ifndef BEAST_BUILD_TYPE
     BEAST_BUILD_TYPE := UNOFFICIAL
-endif
-
-ifeq ($(BEAST_BETA),true)
-    BEAST_BUILD_TYPE := BETA
-endif
-
-ifeq ($(BEAST_ALPHA),true)
-    BEAST_BUILD_TYPE := ALPHA
 endif
 
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
@@ -34,23 +26,21 @@ ifeq ($(BEAST_OFFICIAL),true)
     ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
       IS_OFFICIAL=true
       BEAST_BUILD_TYPE := OFFICIAL
-
-#PRODUCT_PACKAGES += \
-#    Updater
-
     else
       BEAST_BUILD_TYPE := UNOFFICIAL
     endif
 endif
 
-BEAST_VERSION := BeastROMs-$(BEAST_MOD_VERSION)-$(CURRENT_DEVICE)-$(BEAST_BUILD_TYPE)-$(shell date -u +%Y%m%d)
+DATE := $(shell date -u +%Y%m%d-%H%M)
+TARGET_BACON_NAME := BeastROMs-$(BEAST_VERSION)-$(CURRENT_DEVICE)-$(BEAST_BUILD_TYPE)-$(DATE)
+BEAST_FINGERPRINT := BeastROMs/$(BEAST_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(DATE)
+BEAST_DISPLAY_VERSION := BeastROMs-$(BEAST_VERSION)-$(BEAST_BUILD_TYPE)
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-  ro.beast.version=$(BEAST_VERSION) \
-  ro.beast.releasetype=$(BEAST_BUILD_TYPE) \
-  ro.mod.version=$(BEAST_MOD_VERSION)
+PRODUCT_PROPERTY_OVERRIDES += \
+BUILD_DISPLAY_ID=$(BUILD_ID) \
+com.beast.fingerpring=$(BEAST_FINGERPRINT) \
+ro.beast.version=$(BEAST_VERSION) \
+ro.beast.display.version=$(BEAST_DISPLAY_VERSION) \
+ro.beast.releasetype=$(BEAST_BUILD_TYPE) \
+ro.modversion=$(TARGET_BACON_NAME)
 
-BEAST_DISPLAY_VERSION := BeastROMs-$(BEAST_MOD_VERSION)-$(BEAST_BUILD_TYPE)
-
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-  ro.beast.display.version=$(BEAST_DISPLAY_VERSION)
