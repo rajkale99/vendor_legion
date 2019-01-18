@@ -50,6 +50,7 @@ include vendor/beast/config/version.mk
 
 # Omni Poor Man Themes
 PRODUCT_PACKAGES += \
+    ContactsTheme \
     DocumentsUITheme \
     DialerTheme \
     TelecommTheme

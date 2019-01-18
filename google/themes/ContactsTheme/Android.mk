@@ -1,8 +1,8 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_PACKAGE_NAME := GboardOmniTheme
-LOCAL_RRO_THEME := GboardOmniTheme
+LOCAL_PACKAGE_NAME := ContactsTheme
+LOCAL_RRO_THEME := ContactsTheme
 LOCAL_CERTIFICATE := platform
 LOCAL_MODULE_TAGS := optional
 LOCAL_SDK_VERSION := current
