@@ -53,6 +53,7 @@ PRODUCT_PACKAGES += \
     ContactsTheme \
     DocumentsUITheme \
     DialerTheme \
+    PhonographTheme \
     TelecommTheme
 
  PRODUCT_PACKAGES += \
