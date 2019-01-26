@@ -172,4 +172,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Custom-Fonts
 	
+#Phonograph
+PRODUCT_PACKAGES += \
+	Phonograph
+	
 
