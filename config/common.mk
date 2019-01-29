@@ -3,15 +3,15 @@ PRODUCT_NAME := beast
 PRODUCT_BRAND := beast
 PRODUCT_DEVICE := generic
 
- EXCLUDE_SYSTEMUI_TESTS := true
+EXCLUDE_SYSTEMUI_TESTS := true
 
- # version
+# version
 include vendor/beast/config/version.mk
 
- # Props
+# Props
 include vendor/beast/config/beast_props.mk
 
- # Packages
+# Packages
 include vendor/beast/config/packages.mk
 
 # Backup Tool
