@@ -159,14 +159,6 @@ PRODUCT_PACKAGES += \
  # Charger images
 PRODUCT_PACKAGES += \
     charger_res_images
-
-# QS header styles
-PRODUCT_PACKAGES += \
-    QSHeaderBlack \
-    QSHeaderGrey \
-    QSHeaderLightGrey \
-    QSHeaderAccent \
-    QSHeaderTransparent
 	
 #Font package
 PRODUCT_PACKAGES += \
