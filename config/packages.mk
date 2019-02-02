@@ -30,6 +30,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
 	vendor/beast/prebuilt/common/etc/permissions/org.pixelexperience.weather.client.xml:system/etc/permissions/org.pixelexperience.weather.client.xml \
     vendor/beast/prebuilt/common/etc/permissions/default-permissions/org.pixelexperience.weather.client.xml:system/etc/default-permissions/org.pixelexperience.weather.client.xml
+	
+# Pixel sysconfig
+PRODUCT_COPY_FILES += \
+    vendor/beast/prebuilt/common/etc/sysconfig/pixel.xml:system/etc/sysconfig/pixel.xml
+	
+# Fix Dialer
+PRODUCT_COPY_FILES +=  \
+    vendor/beast/prebuilt/common/etc/sysconfig/dialer_experience.xml:system/etc/sysconfig/dialer_experience.xml
 
 # Turbo
 PRODUCT_PACKAGES += \

@@ -41,9 +41,13 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Bootanimation
 $(call inherit-product, vendor/beast/config/bootanimation.mk)
 
-# Apns
- PRODUCT_COPY_FILES += \
-     vendor/beast/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+# Sensitive Phone Numbers list
+PRODUCT_COPY_FILES += \
+    vendor/beast/prebuilt/common/etc/sensitive_pn.xml:system/etc/sensitive_pn.xml
+
+# World APN list
+PRODUCT_COPY_FILES += \
+    vendor/beast/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # Versioning
 include vendor/beast/config/version.mk
