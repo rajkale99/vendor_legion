@@ -41,6 +41,10 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Bootanimation
 $(call inherit-product, vendor/beast/config/bootanimation.mk)
 
+# Substratum Key
+PRODUCT_COPY_FILES += \
+    vendor/beast/prebuilt/common/priv-app/SubstratumKey.apk:system/priv-app/SubstratumKey/SubstratumKey.apk
+
 # Sensitive Phone Numbers list
 PRODUCT_COPY_FILES += \
     vendor/beast/prebuilt/common/etc/sensitive_pn.xml:system/etc/sensitive_pn.xml
