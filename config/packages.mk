@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Required packages
+
 PRODUCT_PACKAGES += \
     Gallery2 \
     Beast \
@@ -75,16 +76,16 @@ PRODUCT_PACKAGES += \
     wget \
     zip
 
- # Exchange support
+# Exchange support
 PRODUCT_PACKAGES += \
     Exchange2
 
- # exFAT tools
- PRODUCT_PACKAGES += \
+# exFAT tools
+PRODUCT_PACKAGES += \
     fsck.exfat \
     mkfs.exfat
 
- # Openssh
+# Openssh
 PRODUCT_PACKAGES += \
     scp \
     sftp \
@@ -94,16 +95,16 @@ PRODUCT_PACKAGES += \
     ssh-keygen \
     start-ssh
 
- # rsync
+# rsync
 PRODUCT_PACKAGES += \
     rsync
 
- # Include explicitly to work around GMS issues
+# Include explicitly to work around GMS issues
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full \
     librsjni
 
- # These packages are excluded from user builds
+# These packages are excluded from user builds
 ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_PACKAGES += \
     procmem \
@@ -154,7 +155,7 @@ PRODUCT_PACKAGES += \
     QStileOreoCircleTrim \
     QStileOreoSquircleTrim
 
- # Charger images
+# Charger images
 PRODUCT_PACKAGES += \
     charger_res_images
 	

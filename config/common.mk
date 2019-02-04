@@ -64,14 +64,14 @@ PRODUCT_PACKAGES += \
     PhonographTheme \
     TelecommTheme
 
- PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     NotificationsXtended \
     NotificationsBlack \
     NotificationsDark \
     NotificationsLight \
     NotificationsPrimary
 
- PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     AccentSluttyPink \
     AccentPixel \
     AccentGoldenShower \
