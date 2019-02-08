@@ -167,8 +167,4 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	Phonograph
 	
-#ThermalController
-PRODUCT_PACKAGES += \
-	ThermalController
-	
 

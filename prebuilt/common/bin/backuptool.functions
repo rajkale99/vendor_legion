@@ -3,6 +3,8 @@
 # Functions for backuptool.sh
 #
 
+export V=16.0
+
 copy_file() {
   cp -dp "$1" "$2"
   # symlinks don't have a context
