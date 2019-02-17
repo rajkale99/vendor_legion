@@ -60,3 +60,8 @@ PRODUCT_COPY_FILES += \
 
 # LegionOS OTA
 $(call inherit-product-if-exists, vendor/legion/config/ota.mk)
+
+#Lawnchair
+PRODUCT_PACKAGES += \
+    Lawnchair \
+    LawnConf
