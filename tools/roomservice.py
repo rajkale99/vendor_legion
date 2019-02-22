@@ -41,12 +41,12 @@ except ImportError:
     urllib.request = urllib2
 
 DEBUG = False
-default_manifest = ".repo/manifests/beast_default.xml"
-custom_local_manifest = ".repo/local_manifests/beast_manifest.xml"
+default_manifest = ".repo/manifests/legion_default.xml"
+custom_local_manifest = ".repo/local_manifests/legion_manifest.xml"
 custom_default_revision = "pie"
-custom_dependencies = "beast.dependencies"
-org_manifest = "BEAST-Devices"  # leave empty if org is provided in manifest
-org_display = "BEAST-Devices"  # needed for displaying
+custom_dependencies = "legion.dependencies"
+org_manifest = "LEGION-Devices"  # leave empty if org is provided in manifest
+org_display = "LEGION-Devices"  # needed for displaying
 
 github_auth = None
 

@@ -70,7 +70,7 @@ function breakfast()
     local variant=$2
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
-    for f in `/bin/ls vendor/beast/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/legion/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -91,7 +91,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch beast_$target-$variant
+            lunch legion_$target-$variant
         fi
     fi
     return $?
@@ -898,12 +898,12 @@ alias cmkap='dopush cmka'
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/beast/tools/repopick.py $@
+    $T/vendor/legion/tools/repopick.py $@
 }
 
 function losrepopick() {
     T=$(gettop)
-    $T/vendor/beast/build/tools/losrepopick.py $@
+    $T/vendor/legion/build/tools/losrepopick.py $@
 }
 
 function fixup_common_out_dir() {

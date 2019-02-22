@@ -1,70 +1,70 @@
 # Generic product
-PRODUCT_NAME := beast
-PRODUCT_BRAND := beast
+PRODUCT_NAME := legion
+PRODUCT_BRAND := legion
 PRODUCT_DEVICE := generic
 
 EXCLUDE_SYSTEMUI_TESTS := true
 
 # version
-include vendor/beast/config/version.mk
+include vendor/legion/config/version.mk
 
 # Props
-include vendor/beast/config/beast_props.mk
+include vendor/legion/config/legion_props.mk
 
 # Packages
-include vendor/beast/config/packages.mk
+include vendor/legion/config/packages.mk
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/beast/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/beast/prebuilt/common/bin/50-beast.sh:system/addon.d/50-beast.sh \
-    vendor/beast/prebuilt/common/bin/blacklist:system/addon.d/blacklist
+    vendor/legion/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/legion/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/legion/prebuilt/common/bin/50-legion.sh:system/addon.d/50-legion.sh \
+    vendor/legion/prebuilt/common/bin/blacklist:system/addon.d/blacklist
 
 ifeq ($(AB_OTA_UPDATER),true)
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
-    vendor/beast/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
-    vendor/beast/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
+    vendor/legion/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
+    vendor/legion/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
+    vendor/legion/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
 
 # priv-app permissions
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/etc/permissions/privapp-permissions-beast.xml:system/etc/permissions/privapp-permissions-beast.xml \
-    vendor/beast/prebuilt/common/etc/permissions/privapp-permissions-elgoog.xml:system/etc/permissions/privapp-permissions-elgoog.xml
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-legion.xml:system/etc/permissions/privapp-permissions-legion.xml \
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-elgoog.xml:system/etc/permissions/privapp-permissions-elgoog.xml
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    vendor/beast/overlay/common \
-    vendor/beast/overlay/themes
+    vendor/legion/overlay/common \
+    vendor/legion/overlay/themes
 
 # Bootanimation
-$(call inherit-product, vendor/beast/config/bootanimation.mk)
+$(call inherit-product, vendor/legion/config/bootanimation.mk)
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:system/etc/permissions/privapp-permissions-lawnchair.xml \
-    vendor/beast/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:system/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:system/etc/permissions/privapp-permissions-lawnchair.xml \
+    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:system/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
 
 # Substratum Key
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/priv-app/SubstratumKey.apk:system/priv-app/SubstratumKey/SubstratumKey.apk
+    vendor/legion/prebuilt/common/priv-app/SubstratumKey.apk:system/priv-app/SubstratumKey/SubstratumKey.apk
 
 # Sensitive Phone Numbers list
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/etc/sensitive_pn.xml:system/etc/sensitive_pn.xml
+    vendor/legion/prebuilt/common/etc/sensitive_pn.xml:system/etc/sensitive_pn.xml
 
 # World APN list
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+    vendor/legion/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # LatinIME gesture typing
 PRODUCT_COPY_FILES += \
-    vendor/beast/prebuilt/common/lib64/libjni_latinime.so:system/lib64/libjni_latinime.so \
-    vendor/beast/prebuilt/common/lib64/libjni_latinimegoogle.so:system/lib64/libjni_latinimegoogle.so
+    vendor/legion/prebuilt/common/lib64/libjni_latinime.so:system/lib64/libjni_latinime.so \
+    vendor/legion/prebuilt/common/lib64/libjni_latinimegoogle.so:system/lib64/libjni_latinimegoogle.so
 
 # Versioning
-include vendor/beast/config/version.mk
+include vendor/legion/config/version.mk
 
 # Omni Poor Man Themes
 PRODUCT_PACKAGES += \
@@ -113,10 +113,10 @@ PRODUCT_PACKAGES += \
     PrimaryDarkBlue
 
 # Props
-include vendor/beast/config/beast_props.mk
+include vendor/legion/config/legion_props.mk
 
 # Sounds
-include vendor/beast/config/sounds.mk
+include vendor/legion/config/sounds.mk
 
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false

@@ -1,4 +1,4 @@
-# Copyright (C) 2019 BeastROMs
+# Copyright (C) 2019 LegionROMs
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,35 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-BEAST_VERSION = 1.2
+LEGION_VERSION = 0.1
 
-ifndef BEAST_BUILD_TYPE
-    BEAST_BUILD_TYPE := UNOFFICIAL
+ifndef LEGION_BUILD_TYPE
+    LEGION_BUILD_TYPE := UNOFFICIAL
 endif
 
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
-ifeq ($(BEAST_OFFICIAL),true)
-   LIST = $(shell curl -s https://raw.githubusercontent.com/BeastRoms/vendor_beast/pie/beast.devices)
+ifeq ($(LEGION_OFFICIAL),true)
+   LIST = $(shell curl -s https://raw.githubusercontent.com/LegionRoms/vendor_legion/pie/legion.devices)
    FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
     ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
       IS_OFFICIAL=true
-      BEAST_BUILD_TYPE := OFFICIAL
+      LEGION_BUILD_TYPE := OFFICIAL
     else
-      BEAST_BUILD_TYPE := UNOFFICIAL
+      LEGION_BUILD_TYPE := UNOFFICIAL
     endif
 endif
 
 DATE := $(shell date -u +%Y%m%d-%H%M)
-TARGET_BACON_NAME := BeastROMs-$(BEAST_VERSION)-$(CURRENT_DEVICE)-$(BEAST_BUILD_TYPE)-$(DATE)
-BEAST_FINGERPRINT := BeastROMs/$(BEAST_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(DATE)
-BEAST_DISPLAY_VERSION := BeastROMs-$(BEAST_VERSION)-$(BEAST_BUILD_TYPE)
+TARGET_BACON_NAME := LegionROMs-$(LEGION_VERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(DATE)
+LEGION_FINGERPRINT := LegionROMs/$(LEGION_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(DATE)
+LEGION_DISPLAY_VERSION := LegionROMs-$(LEGION_VERSION)-$(LEGION_BUILD_TYPE)
 
 PRODUCT_PROPERTY_OVERRIDES += \
 BUILD_DISPLAY_ID=$(BUILD_ID) \
-com.beast.fingerpring=$(BEAST_FINGERPRINT) \
-ro.beast.version=$(BEAST_VERSION) \
-ro.beast.display.version=$(BEAST_DISPLAY_VERSION) \
-ro.beast.releasetype=$(BEAST_BUILD_TYPE) \
+com.legion.fingerpring=$(LEGION_FINGERPRINT) \
+ro.legion.version=$(LEGION_VERSION) \
+ro.legion.display.version=$(LEGION_DISPLAY_VERSION) \
+ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
 ro.modversion=$(TARGET_BACON_NAME)
 
