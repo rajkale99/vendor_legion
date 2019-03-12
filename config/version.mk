@@ -21,7 +21,7 @@ endif
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
 ifeq ($(LEGION_OFFICIAL),true)
-   LIST = $(shell curl -s https://raw.githubusercontent.com/LegionRoms/vendor_legion/pie/legion.devices)
+   LIST = $(shell curl -s https://raw.githubusercontent.com/LegionRom/vendor_legion/pie/legion.devices)
    FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
     ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
       IS_OFFICIAL=true
