@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_VERSION = 0.1
+LEGION_VERSION = 1.0
 
 ifndef LEGION_BUILD_TYPE
     LEGION_BUILD_TYPE := UNOFFICIAL
@@ -21,7 +21,7 @@ endif
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
 ifeq ($(LEGION_OFFICIAL),true)
-   LIST = $(shell curl -s https://raw.githubusercontent.com/LegionRom/vendor_legion/pie/legion.devices)
+   LIST = $(shell curl -s https://raw.githubusercontent.com/legionRom/platform_vendor_legion/pie/legion.devices)
    FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
     ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
       IS_OFFICIAL=true
