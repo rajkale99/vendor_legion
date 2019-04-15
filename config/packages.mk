@@ -25,7 +25,8 @@ PRODUCT_PACKAGES += \
     WellbeingPrebuilt \
     OmniStyle \
     WallpaperPickerGoogle \
-    WeatherClient
+    WeatherClient \
+    LegionPapers
 
 # Weather permissions
 PRODUCT_COPY_FILES += \
