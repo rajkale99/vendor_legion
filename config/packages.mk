@@ -20,7 +20,9 @@ PRODUCT_PACKAGES += \
     Launcher3 \
     LiveWallpapers \
     LiveWallpapersPicker \
-    messaging \
+    GMessaging \
+    GDialer \
+    GContacts \
     SubstratumSignature \
     WellbeingPrebuilt \
     OmniStyle \
@@ -44,7 +46,6 @@ PRODUCT_PACKAGES += \
     ExactCalculator \
     LatinIME \
     Launcher3QuickStep \
-    messaging \
     Stk
 
  # Extra tools
@@ -159,6 +160,14 @@ PRODUCT_PACKAGES += \
 # Charger images
 PRODUCT_PACKAGES += \
     charger_res_images
+
+# QS header styles
+PRODUCT_PACKAGES += \
+    QSHeaderBlack \
+    QSHeaderGrey \
+    QSHeaderLightGrey \
+    QSHeaderAccent \
+    QSHeaderTransparent
 	
 #Font package
 PRODUCT_PACKAGES += \
