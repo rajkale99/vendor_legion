@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_VERSION = 1.2
+LEGION_VERSION = 1.3
 
 ifndef LEGION_BUILD_TYPE
     LEGION_BUILD_TYPE := UNOFFICIAL
