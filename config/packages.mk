@@ -16,7 +16,7 @@
 PRODUCT_PACKAGES += \
     Gallery2 \
     Legion \
-    LatinIME \
+    GboardGoPreb \
     Launcher3 \
     LiveWallpapers \
     LiveWallpapersPicker \

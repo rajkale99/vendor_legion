@@ -57,11 +57,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
-# LatinIME gesture typing
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/lib64/libjni_latinime.so:system/lib64/libjni_latinime.so \
-    vendor/legion/prebuilt/common/lib64/libjni_latinimegoogle.so:system/lib64/libjni_latinimegoogle.so
-
 # Versioning
 include vendor/legion/config/version.mk
 
