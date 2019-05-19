@@ -45,8 +45,8 @@ default_manifest = ".repo/manifests/legion_default.xml"
 custom_local_manifest = ".repo/local_manifests/legion_manifest.xml"
 custom_default_revision = "pie"
 custom_dependencies = "legion.dependencies"
-org_manifest = "LegionRom"  # leave empty if org is provided in manifest
-org_display = "LegionRom"  # needed for displaying
+org_manifest = "LegionOS-Devices"  # leave empty if org is provided in manifest
+org_display = "LegionOS-Devices"  # needed for displaying
 
 github_auth = None
 
