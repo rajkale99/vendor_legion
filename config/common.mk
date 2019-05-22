@@ -144,7 +144,9 @@ PRODUCT_PACKAGES += \
     AccentOrangeCoral \
     AccentPureLust \
     AccentQuepal \
-    AccentShadesOfGrey
+    AccentShadesOfGrey \
+    AccentSweetQPurple \
+    AccentQGreen
 
  PRODUCT_PACKAGES += \
     PrimaryAlmostBlack \
