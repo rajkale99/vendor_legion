@@ -28,7 +28,8 @@ PRODUCT_PACKAGES += \
     OmniStyle \
     WallpaperPickerGoogle \
     WeatherClient \
-    LegionPapers
+    LegionPapers \
+    SettingsIntelligence
 
 # Weather permissions
 PRODUCT_COPY_FILES += \
