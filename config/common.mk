@@ -156,7 +156,10 @@ PRODUCT_PACKAGES += \
     PrimaryWhite \
     PrimaryColdWhite \
     PrimaryWarmWhite \
-    PrimaryDarkBlue
+    PrimaryDarkBlue \
+    PrimaryRocky \
+    PrimaryColtChocko \
+    PrimaryBlueBlack
 
 # Props
 include vendor/legion/config/legion_props.mk
