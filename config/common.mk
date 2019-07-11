@@ -61,7 +61,28 @@ PRODUCT_COPY_FILES += \
 # Versioning
 include vendor/legion/config/version.mk
 
-# Omni Poor Man Themes
+# QS tile styles
+PRODUCT_PACKAGES += \
+    QStileInk \
+    QStileInkDrop \
+    QStileTeardrop \
+    QStileCookie \
+    QStilesCircleOutline \
+    QStileHexagon \
+    QStileStar \
+    QStileSquare \
+    QStileGear \
+    QStileBadge \
+    QStileBadgetwo \
+    QStileSquircle \
+    QStileDiamond \
+    QStileNeonlike \
+    QStileOOS \
+    QStileTriangles \
+    QStileDivided \
+    QStileCosmos
+
+# Omni's PoorMan Themes
 PRODUCT_PACKAGES += \
     DocumentsUITheme \
     DialerTheme \
