@@ -45,7 +45,7 @@ LEGION_DISPLAY_VERSION := LEGIONOS-$(LEGION_VERSION)-$(LEGION_BUILD_TYPE)
 
 PRODUCT_PROPERTY_OVERRIDES += \
 BUILD_DISPLAY_ID=$(BUILD_ID) \
-com.legion.fingerpring=$(LEGION_FINGERPRINT) \
+com.legion.fingerprint=$(LEGION_FINGERPRINT) \
 ro.legion.version=$(LEGION_VERSION) \
 ro.legion.display.version=$(LEGION_DISPLAY_VERSION) \
 ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
