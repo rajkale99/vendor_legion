@@ -175,3 +175,6 @@ PRODUCT_COPY_FILES += \
 
 # Gapps
 -include vendor/legion/gapps.mk
+
+# Enable ccache
+USE_CCACHE := true
