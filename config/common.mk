@@ -199,4 +199,6 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opa.eligible_device=true
 
-
+# ThemePicker
+PRODUCT_PACKAGES += \
+    ThemePicker
