@@ -61,7 +61,7 @@ PRODUCT_COPY_FILES += \
 include vendor/legion/config/version.mk
 
 # QS tile styles
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     QStileInk \
     QStileInkDrop \
     QStileTeardrop \
@@ -82,20 +82,20 @@ PRODUCT_PACKAGES += \
     QStileCosmos
 
 # Omni's PoorMan Themes
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     DocumentsUITheme \
     DialerTheme \
     PhonographTheme \
     TelecommTheme
 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     NotificationsXtended \
     NotificationsBlack \
     NotificationsDark \
     NotificationsLight \
     NotificationsPrimary
 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     AccentSluttyPink \
     AccentPixel \
     AccentGoldenShower \
@@ -149,7 +149,7 @@ PRODUCT_PACKAGES += \
     AccentElegantGreen \
     AccentIllusionsPurple
 
- PRODUCT_PACKAGES += \
+ #PRODUCT_PACKAGES += \
     PrimaryAlmostBlack \
     PrimaryBlack \
     PrimaryXtended \
