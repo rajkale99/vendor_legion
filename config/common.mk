@@ -71,11 +71,11 @@ PRODUCT_COPY_FILES += \
 endif
 
 PRODUCT_COPY_FILES += \
-    vendor/legion/config/permissions/privapp-permissions-legion-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-legion-system.xml \
+    vendor/legion/config/permissions/privapp-permissions-legion-system.xml:system/etc/permissions/privapp-permissions-legion-system.xml \
     vendor/legion/config/permissions/privapp-permissions-legion-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-legion-product.xml \
     vendor/legion/config/permissions/legion-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-power-whitelist.xml \
     vendor/legion/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-google_prebuilt.xml \
-    vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/wallpaper_privapp-permissions.xml
+    vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:system/etc/permissions/wallpaper_privapp-permissions.xml
 
 # Gapps
 $(call inherit-product, vendor/legion/gapps.mk)
