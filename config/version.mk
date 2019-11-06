@@ -12,19 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_TAG=Beta
-LEGION_VERSION := v2.0
+LEGION_VERSION := v2.1
 
 # LEGION RELEASE VERSION
 ifndef LEGION_BUILD_TYPE
     LEGION_BUILD_TYPE := Unofficial
 endif
 
-TARGET_PRODUCT_SHORT := $(subst legion_,,$(LEGION_BUILD_TYPE))
+CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
+ifeq ($(LEGION_OFFICIAL),true)
+   LIST = $(shell curl -s https://raw.githubusercontent.com/legionRom/platform_vendor_legion/pie/legion.devices)
+   FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
+    ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
+      IS_OFFICIAL=true
+      LEGION_BUILD_TYPE := OFFICIAL
+    else
+      LEGION_BUILD_TYPE := UNOFFICIAL
+    endif
+endif
 
-LEGION_DATE := $(shell date -u +%d-%m-%Y)
+LEGION_DATE := $(shell date -u +%Y%m%d-%H%M)
 
-LEGION_FINGERPRINT := LegionOS-Android-$(LEGION_VERSION)/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(shell date -u +%Y%m%d)/$(shell date -u +%H%M)
+LEGION_FINGERPRINT := LEGIONOS/$|(LEGION_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(LEGION_DATE) 
 
-LEGION_BUILD_VERSION := LegionOS-$(LEGION_TAG)-$(LEGION_VERSION)-$(LEGION_BUILD_TYPE)-$(shell date -u +%Y%m%d)
+LEGION_BUILD_VERSION := LEGIONOS-$(LEGION_VERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(LEGION_DATE)
