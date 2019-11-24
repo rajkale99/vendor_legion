@@ -185,3 +185,7 @@ PRODUCT_COPY_FILES += \
 
 # Enable ccache
 USE_CCACHE := true
+
+#Prebuilt Packages
+PRODUCT PACKAGES += \
+	OPScreenRecorder
