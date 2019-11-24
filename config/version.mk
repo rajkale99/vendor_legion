@@ -32,15 +32,23 @@ ifeq ($(LEGION_OFFICIAL),true)
     endif
 endif
 
+CUSTOM_DATE_YEAR := $(shell date -u +%Y)
+CUSTOM_DATE_MONTH := $(shell date -u +%m)
+CUSTOM_DATE_DAY := $(shell date -u +%d)
+CUSTOM_DATE_HOUR := $(shell date -u +%H)
+CUSTOM_DATE_MINUTE := $(shell date -u +%M)
+BUILD_DATE_UTC := $(shell date -d '$(CUSTOM_DATE_YEAR)-$(CUSTOM_DATE_MONTH)-$(CUSTOM_DATE_DAY) $(CUSTOM_DATE_HOUR):$(CUSTOM_DATE_MINUTE) UTC' +%s)
+
 BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 
 LEGION_FINGERPRINT := LEGIONOS/$|(LEGION_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(BUILD_DATE)
-LEGION_VERSION := $(LEGION_BUILD_VERSION)-$(LEGION_BUILD_TYPE)-$(LEGION_BUILD)-$(BUILD_DATE)
-LEGION_BUILD_VERSION := 2.3
+LEGION_BUILD_VERSION := LEGIONOS-$(LEGION_VERSION)-$(LEGION_BUILD)-$(LEGION_BUILD_TYPE)-$(BUILD_DATE)
+LEGION_VERSION := 2.3
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
   ro.legion.build.version=$(LEGION_BUILD_VERSION) \
   ro.legion.build.date=$(BUILD_DATE) \
+  ro legion.build.date.utc=$(BUILD_DATE_UTC) \
   ro.legion.buildtype=$(LEGION_BUILD_TYPE) \
   ro.legion.fingerprint=$(LEGION_FINGERPRINT) \
   ro.legion.version=$(LEGION_VERSION) \
