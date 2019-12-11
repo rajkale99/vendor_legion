@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_MOD_VERSION := v2.5
+LEGION_MOD_VERSION := v10.0
+LEGIONVERSION := v2.5
 
 # ZIP TYPE
 ifeq ($(WITH_GAPPS), true)
@@ -44,7 +45,7 @@ LEGION_BUILD_TYPE := UNOFFICIAL
 $(error Device is not official "$(CURRENT_DEVICE)")
 endif
 endif
-LEGION_VERSION := Legion-$(LEGION_MOD_VERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(shell date -u +%Y%m%d)-$(LEGION_BUILD_ZIP_TYPE)
+LEGION_VERSION := Legion-$(LEGIONVERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(shell date -u +%Y%m%d)-$(LEGION_BUILD_ZIP_TYPE)
 
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -52,10 +53,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
   ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
   ro.legion.version=$(LEGION_VERSION) \
   ro.modversion=$(LEGION_MOD_VERSION) \
-  ro.legion.device=$(CURRENT_DEVICE)
+  ro.legion.device=$(CURRENT_DEVICE) \
+  ro.legionversion=$(LEGIONVERSION)
 
 
-LEGION_DISPLAY_VERSION := Legion-$(LEGION_MOD_VERSION)-$(LEGION_BUILD_TYPE)
+LEGION_DISPLAY_VERSION := Legion-$(LEGIONVERSION)-$(LEGION_BUILD_TYPE)
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
   ro.legion.display.version=$(LEGION_DISPLAY_VERSION)
