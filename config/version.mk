@@ -12,50 +12,49 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_VERSION := v2.3
+LEGION_MOD_VERSION := v2.4
+
+# ZIP TYPE
+ifeq ($(WITH_GAPPS), true)
+LEGION_BUILD_ZIP_TYPE := Q-GAPPS
+else
+LEGION_BUILD_ZIP_TYPE :=Q
+endif
 
 # LEGION RELEASE VERSION
 ifndef LEGION_BUILD_TYPE
-    LEGION_BUILD_TYPE := Unofficial
+    LEGION_BUILD_TYPE := UNOFFICIAL
 endif
 
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
-ifeq ($(LEGION_OFFICIAL),true)
-   LIST = $(shell curl -s https://raw.githubusercontent.com/legionRom/platform_vendor_legion/pie/legion.devices)
-   FOUND_DEVICE = $(filter $(CURRENT_DEVICE), $(LIST))
-    ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
-      IS_OFFICIAL=true
+ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
+   LIST = $(shell cat vendor/legion/legion.devices)
+   ifeq ($(filter $(CURRENT_DEVICE), $(LIST)), $(CURRENT_DEVICE))
+    IS_OFFICIAL=true
       LEGION_BUILD_TYPE := OFFICIAL
-    else
-      LEGION_BUILD_TYPE := UNOFFICIAL
-    endif
+
+    PRODUCT_PACKAGES += \
+	Updater
+
 endif
 
-CUSTOM_DATE_YEAR := $(shell date -u +%Y)
-CUSTOM_DATE_MONTH := $(shell date -u +%m)
-CUSTOM_DATE_DAY := $(shell date -u +%d)
-CUSTOM_DATE_HOUR := $(shell date -u +%H)
-CUSTOM_DATE_MINUTE := $(shell date -u +%M)
-BUILD_DATE_UTC := $(shell date -d '$(CUSTOM_DATE_YEAR)-$(CUSTOM_DATE_MONTH)-$(CUSTOM_DATE_DAY) $(CUSTOM_DATE_HOUR):$(CUSTOM_DATE_MINUTE) UTC' +%s)
+ifneq ($(IS_OFFICIAL), true)
+LEGION_BUILD_TYPE := UNOFFICIAL
+$(error Device is not official "$(CURRENT_DEVICE)")
+endif
+endif
+LEGION_VERSION := Legion-$(LEGION_MOD_VERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(shell date -u +%Y%m%d)-$(LEGION_BUILD_ZIP_TYPE)
 
-BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
-
-LEGION_FINGERPRINT := LEGIONOS/$|(LEGION_VERSION)/$(PLATFORM_VERSION)/$(BUILD_ID)/$(BUILD_DATE)
-LEGION_BUILD_VERSION := LEGIONOS-$(LEGION_VERSION)-$(LEGION_BUILD)-$(LEGION_BUILD_TYPE)-$(BUILD_DATE)
-LEGION_VERSION := 2.3
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-  ro.legion.build.version=$(LEGION_BUILD_VERSION) \
-  ro.legion.build.date=$(BUILD_DATE) \
-  ro legion.build.date.utc=$(BUILD_DATE_UTC) \
-  ro.legion.buildtype=$(LEGION_BUILD_TYPE) \
-  ro.legion.fingerprint=$(LEGION_FINGERPRINT) \
+  ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
+  ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
   ro.legion.version=$(LEGION_VERSION) \
-  ro.legion.device=$(LEGION_BUILD) \
-  ro.modversion=$(LEGION_VERSION)
+  ro.modversion=$(LEGION_MOD_VERSION)
 
-ifneq ($(OVERRIDE_OTA_CHANNEL),)
-    PRODUCT_PROPERTY_OVERRIDES += \
-        legion.updater.uri=$(OVERRIDE_OTA_CHANNEL)
-endif
+
+LEGION_DISPLAY_VERSION := Legion-$(LEGION_MOD_VERSION)-$(LEGION_BUILD_TYPE)
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+  ro.legion.display.version=$(LEGION_DISPLAY_VERSION)
