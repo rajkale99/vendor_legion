@@ -51,7 +51,8 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
   ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
   ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
   ro.legion.version=$(LEGION_VERSION) \
-  ro.modversion=$(LEGION_MOD_VERSION)
+  ro.modversion=$(LEGION_MOD_VERSION) \
+  ro.legion.device=$(CURRENT_DEVICE)
 
 
 LEGION_DISPLAY_VERSION := Legion-$(LEGION_MOD_VERSION)-$(LEGION_BUILD_TYPE)
