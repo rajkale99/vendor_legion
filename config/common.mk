@@ -196,3 +196,8 @@ PRODUCT_COPY_FILES += \
 
 # Enable ccache
 USE_CCACHE := true
+
+# Allows registering device to Google easier for gapps
+# Integrates package for easier Google Pay fixing
+PRODUCT_PACKAGES += \
+    sqlite3
