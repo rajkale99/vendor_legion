@@ -144,8 +144,8 @@ PRODUCT_PACKAGES += \
     GalleryGoPrebuilt \
     MarkupGoogle \
     SoundPickerPrebuilt \
-    Lawnchair \
-    PixelThemes
+    PixelThemesStub2019 \
+    Lawnchair
 
 # ThemePicker
 PRODUCT_PACKAGES += \
