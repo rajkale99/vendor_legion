@@ -135,6 +135,7 @@ PRODUCT_PACKAGES += \
     GalleryGoPrebuilt \
     MarkupGoogle \
     SoundPickerPrebuilt \
+    Lawnchair \
     PixelThemes
 
 # ThemePicker
@@ -167,6 +168,12 @@ PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/fonts/Rosemary/Rosemary-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Rosemary-Regular.ttf \
     vendor/legion/prebuilt/fonts/SonySketch/SonySketch.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SonySketch.ttf \
     vendor/legion/prebuilt/fonts/Surfer/Surfer.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Surfer.ttf
+
+
+# Lawnchair
+PRODUCT_COPY_FILES += \
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:system/etc/permissions/privapp-permissions-lawnchair.xml \ 
+    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:system/etc/sysconfig/lawnchair-hiddenapi-package-whitelis$
 
 # Inclusion of legion specific files
 
