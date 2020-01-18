@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_MOD_VERSION := v2.4
+LEGION_MOD_VERSION := v2.5
 
 # ZIP TYPE
 ifeq ($(WITH_GAPPS), true)
