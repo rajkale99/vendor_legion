@@ -204,3 +204,4 @@ USE_CCACHE := true
 PRODUCT_PACKAGES += \
     sqlite3
 
+include vendor/legion/themes/backgrounds/themes.mk
