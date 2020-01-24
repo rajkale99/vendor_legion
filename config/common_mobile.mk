@@ -17,18 +17,6 @@ PRODUCT_PACKAGES += \
     ExactCalculator \
     Exchange2
 
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
-
-# Custom off-mode charger
-ifeq ($(WITH_LEGION_CHARGER),true)
-PRODUCT_PACKAGES += \
-    legion_charger_res_images \
-    font_log.png \
-    libhealthd.legion
-endif
-
 # Media
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
