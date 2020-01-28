@@ -107,7 +107,8 @@ PRODUCT_PACKAGES += \
 
 # Init.d script support
 PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/init.local.rc:system/etc/init/init.legion.rc
+    vendor/legion/prebuilt/common/etc/init.local.rc:system/etc/init/init.legion.rc \
+    vendor/legion/prebuilt/common/etc/init/legion-init.rc:system/etc/init/legion-init.rc
 
 # Markup libs
 PRODUCT_COPY_FILES += \
