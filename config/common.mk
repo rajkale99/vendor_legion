@@ -110,7 +110,8 @@ PRODUCT_PACKAGES += \
     Stk \
     Terminal \
     OPScreenRecorder \
-    Snap
+    Snap \
+    ExactCalculator
 
 # Init.d script support
 PRODUCT_COPY_FILES += \
