@@ -98,12 +98,18 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/common/etc/calibration_cad.xml:system/etc/calibration_cad.xml
 
+# Fonts
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,vendor/legion/prebuilt/fonts,$(TARGET_COPY_OUT_PRODUCT)/fonts) \
+	vendor/legion/prebuilt/etc/fonts_customization.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/fonts_customization.xml
+
 # Extra packages
 PRODUCT_PACKAGES += \
     Launcher3 \
     messaging \
     Stk \
-    Terminal
+    Terminal \
+    OPScreenRecorder
 
 # Init.d script support
 PRODUCT_COPY_FILES += \
@@ -136,6 +142,7 @@ PRODUCT_PACKAGES += \
     MarkupGoogle \
     SoundPickerPrebuilt \
     Lawnchair \
+    FontGoogleSansOverlay \
     PixelThemes
 
 # ThemePicker
@@ -143,6 +150,7 @@ PRODUCT_PACKAGES += \
     ThemePicker
 
 # Legion Stuff - Copy to System fonts
+
 PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/fonts/gobold/Gobold.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Gobold.ttf \
     vendor/legion/prebuilt/fonts/gobold/Gobold-Italic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Gobold-Italic.ttf \
@@ -167,7 +175,9 @@ PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/fonts/LGSmartGothic/LGSmartGothic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/LGSmartGothic.ttf \
     vendor/legion/prebuilt/fonts/Rosemary/Rosemary-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Rosemary-Regular.ttf \
     vendor/legion/prebuilt/fonts/SonySketch/SonySketch.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SonySketch.ttf \
-    vendor/legion/prebuilt/fonts/Surfer/Surfer.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Surfer.ttf
+    vendor/legion/prebuilt/fonts/Surfer/Surfer.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Surfer.ttf \
+    vendor/legion/fonts/SlateFromOnePlus/SlateFromOP-Light.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SlateFromOP-Light.ttf \
+    vendor/legion/fonts/SlateFromOnePlus/SlateFromOP-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SlateFromOP-Regular.ttf 
 
 
 # Lawnchair
@@ -185,7 +195,3 @@ PRODUCT_COPY_FILES += \
 
 # Enable ccache
 USE_CCACHE := true
-
-#Prebuilt Packages
-PRODUCT PACKAGES += \
-	OPScreenRecorder
