@@ -109,7 +109,8 @@ PRODUCT_PACKAGES += \
     messaging \
     Stk \
     Terminal \
-    OPScreenRecorder
+    OPScreenRecorder \
+    Snap
 
 # Init.d script support
 PRODUCT_COPY_FILES += \
