@@ -144,7 +144,6 @@ PRODUCT_PACKAGES += \
     MarkupGoogle \
     SoundPickerPrebuilt \
     Lawnchair \
-    FontGoogleSansOverlay \
     PixelThemes
 
 # ThemePicker
