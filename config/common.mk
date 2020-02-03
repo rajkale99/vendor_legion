@@ -136,7 +136,8 @@ PRODUCT_COPY_FILES += \
 # Priv-app config
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/privapp-permissions-legion.xml:system/etc/permissions/privapp-permissions-legion.xml \
-    vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/wallpaper_privapp-permissions.xml
+    vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/wallpaper_privapp-permissions.xml \
+    vendor/legion/config/permissions/privapp-permissions-opscreenrecorder.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-opscreenrecorder.xml
 
 # Legion packages
 PRODUCT_PACKAGES += \
