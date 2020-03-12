@@ -320,3 +320,10 @@ PRODUCT_COPY_FILES += \
 
 # Enable ccache
 USE_CCACHE := true
+
+# Fod
+DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
+ifeq ($(EXTRA_FOD_ANIMATIONS),true)
+DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/fod
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay/fod
+endif
