@@ -253,6 +253,16 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
 -include vendor/legion/config/version.mk
 -include vendor/legion/gapps.mk
 
+# Face Unlock
+TARGET_FACE_UNLOCK_SUPPORTED := true
+ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
+PRODUCT_PACKAGES += \
+    FaceUnlockService
+TARGET_FACE_UNLOCK_SUPPORTED := true
+endif
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.face.moto_unlock_service=$(TARGET_FACE_UNLOCK_SUPPORTED)
+
 # Enable ccache
 USE_CCACHE := true
 
