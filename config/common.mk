@@ -290,6 +290,14 @@ PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/fonts/Shamshung/Shamshung.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Shamshung.ttf \
     vendor/legion/prebuilt/fonts/Aclonica/Aclonica.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Aclonica.ttf \
     vendor/legion/prebuilt/fonts/Amarante/Amarante.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Amarante.ttf \
+    vendor/legion/prebuilt/common/fonts/AntipastoPro/AntipastoPro.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/AntipastoPro.ttf \
+    vendor/legion/prebuilt/common/fonts/EvolveSans/EvolveSans.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/EvolveSans.ttf \
+    vendor/legion/prebuilt/common/fonts/Fucek/Fucek.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Fucek.ttf \
+    vendor/legion/prebuilt/common/fonts/LemonMilk/LemonMilk.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/LemonMilk.ttf \
+    vendor/legion/prebuilt/common/fonts/Oduda/Oduda.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Oduda.ttf \
+    vendor/legion/prebuilt/common/fonts/ReemKufi/ReemKufi.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/ReemKufi.ttf \
+    vendor/legion/prebuilt/common/fonts/GoogleSansMedium/GoogleSansMedium.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoogleSansMedium.ttf \
+    vendor/legion/prebuilt/common/fonts/SimpleDay/SimpleDay.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SimpleDay.ttf \
     vendor/legion/prebuilt/fonts/Bariol/Bariol-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Bariol.ttf \
     vendor/legion/prebuilt/fonts/Cagliostro/Cagliostro-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Cagliostro-Regular.ttf \
     vendor/legion/prebuilt/fonts/Coolstory/Coolstory-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Coolstory-Regular.ttf \
