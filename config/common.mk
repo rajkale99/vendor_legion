@@ -107,8 +107,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     LPaper \
     GalleryGoPrebuilt \
-    MarkupGoogle \
-    SoundPickerPrebuilt \
     ThemePicker \
     PixelThemesStub2019 \
     FontGoogleSansOverlay \
