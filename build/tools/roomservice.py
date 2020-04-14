@@ -41,8 +41,8 @@ except ImportError:
 
 DEBUG = False
 default_manifest = ".repo/manifests/default.xml"
-custom_local_manifest = ".repo/local_manifests/legion_manifest.xml"
-custom_default_revision = "c10"
+custom_local_manifest = ".repo/local_manifests/legion.xml"
+custom_default_revision = "q"
 custom_dependencies = "legion.dependencies"
 org_manifest = "LegionOS-Devices"  # leave empty if org is provided in manifest
 org_display = "LegionOS-Devices"  # needed for displaying
