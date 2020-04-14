@@ -1,10 +1,6 @@
 #!/bin/sh
 
-# Exports
-dir=$ANDROID_BUILD_TOP
-out=$dir/out/target/product
-
-export Changelog=Changelog.txt
+export Changelog=$PWD/Changelog.txt
 
 if [ -f $Changelog ];
 then
@@ -13,7 +9,7 @@ fi
 
 touch $Changelog
 
-for i in $(seq 7);
+for i in $(seq 14);
 do
 export After_Date=`date --date="$i days ago" +%F`
 k=$(expr $i - 1)
@@ -28,14 +24,4 @@ done
 sed -i 's/project/ */g' $Changelog
 sed -i 's/[/]$//' $Changelog
 
-if [ -e $out/*/$Changelog ]
-then
-rm $out/*/$Changelog
-fi
-if [ -e $out/*/system/etc/$Changelog ]
-then
-rm $out/*/system/etc/$Changelog
-fi
-cp $Changelog $OUT/system/etc/
 cp $Changelog $OUT/
-rm $Changelog

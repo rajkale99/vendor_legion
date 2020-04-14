@@ -23,11 +23,11 @@
 #   TARGET_KERNEL_ADDITIONAL_FLAGS     = Additional make flags, optional
 #   TARGET_KERNEL_ARCH                 = Kernel Arch
 #   TARGET_KERNEL_CROSS_COMPILE_PREFIX = Compiler prefix (e.g. arm-eabi-)
-#                                          defaults to arm-linux-androideabi- for arm
+#                                          defaults to arm-linux-androidkernel- for arm
 #                                                      aarch64-linux-android- for arm64
+#                                                      x86_64-linux-android- for x86
 #
 #   TARGET_KERNEL_CLANG_COMPILE        = Compile kernel with clang, defaults to false
-#   TARGET_KERNEL_NEW_GCC_COMPILE      = Compile kernel with newer version GCC, defaults to false
 #
 #   KERNEL_TOOLCHAIN_PREFIX            = Overrides TARGET_KERNEL_CROSS_COMPILE_PREFIX,
 #                                          Set this var in shell to override
@@ -53,24 +53,16 @@ KERNEL_ARCH := $(TARGET_KERNEL_ARCH)
 endif
 
 GCC_PREBUILTS := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86
-ifeq ($(TARGET_KERNEL_NEW_GCC_COMPILE),true)
-    ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
-        $(error TARGET_KERNEL_NEW_GCC_COMPILE cannot be used with TARGET_KERNEL_CLANG_COMPILE!)
-    endif
-    # arm64 toolchain
-    KERNEL_TOOLCHAIN_arm64 := $(GCC_PREBUILTS)/aarch64/aarch64-elf/bin
-    KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-elf-
-    # arm toolchain
-    KERNEL_TOOLCHAIN_arm := $(GCC_PREBUILTS)/arm/arm-eabi/bin
-    KERNEL_TOOLCHAIN_PREFIX_arm := arm-eabi-
-else
-    # arm64 toolchain
-    KERNEL_TOOLCHAIN_arm64 := $(GCC_PREBUILTS)/aarch64/aarch64-linux-android-4.9/bin
-    KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-linux-android-
-    # arm toolchain
-    KERNEL_TOOLCHAIN_arm := $(GCC_PREBUILTS)/arm/arm-linux-androideabi-4.9/bin
-    KERNEL_TOOLCHAIN_PREFIX_arm := arm-linux-androidkernel-
-endif
+# arm64 toolchain
+KERNEL_TOOLCHAIN_arm64 := $(GCC_PREBUILTS)/aarch64/aarch64-linux-android-4.9/bin
+KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-linux-android-
+# arm toolchain
+KERNEL_TOOLCHAIN_arm := $(GCC_PREBUILTS)/arm/arm-linux-androideabi-4.9/bin
+KERNEL_TOOLCHAIN_PREFIX_arm := arm-linux-androidkernel-
+# x86 toolchain
+KERNEL_TOOLCHAIN_x86 := $(GCC_PREBUILTS)/x86/x86_64-linux-android-4.9/bin
+KERNEL_TOOLCHAIN_PREFIX_x86 := x86_64-linux-android-
+
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(strip $(TARGET_KERNEL_CROSS_COMPILE_PREFIX))
 ifneq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
 KERNEL_TOOLCHAIN_PREFIX ?= $(TARGET_KERNEL_CROSS_COMPILE_PREFIX)
@@ -90,13 +82,9 @@ endif
 KERNEL_TOOLCHAIN_PATH_gcc := $(KERNEL_TOOLCHAIN_$(KERNEL_ARCH))/$(KERNEL_TOOLCHAIN_PREFIX_$(KERNEL_ARCH))
 
 ifneq ($(USE_CCACHE),)
-    ifeq ($(USE_SYSTEM_CCACHE),)
-        CCACHE_BIN := $(BUILD_TOP)/prebuilts/tools-extras/$(HOST_PREBUILT_TAG)/bin/ccache
-        # Check that the executable is here.
-        CCACHE_BIN := $(strip $(wildcard $(ccache)))
-    else
-        # Detect if the system already has ccache installed to use instead of the prebuilt
-        CCACHE_BIN := $(shell which ccache)
+    ifneq ($(CCACHE_EXEC),)
+        # Android 10+ deprecates use of a build ccache. Only system installed ones are now allowed
+        CCACHE_BIN := $(CCACHE_EXEC)
     endif
 endif
 
@@ -115,7 +103,7 @@ endif
 KERNEL_MAKE_FLAGS :=
 
 # Add back threads, ninja cuts this to $(nproc)/2
-KERNEL_MAKE_FLAGS += -j4
+KERNEL_MAKE_FLAGS += -j$(shell nproc --all)
 
 ifeq ($(KERNEL_ARCH),arm)
   # Avoid "Unknown symbol _GLOBAL_OFFSET_TABLE_" errors
@@ -137,7 +125,7 @@ ifneq ($(TARGET_KERNEL_ADDITIONAL_FLAGS),)
   KERNEL_MAKE_FLAGS += $(TARGET_KERNEL_ADDITIONAL_FLAGS)
 endif
 
-TOOLS_PATH_OVERRIDE := \
+TOOLS_PATH_OVERRIDE += \
     PATH=$(BUILD_TOP)/prebuilts/tools-lineage/$(HOST_OS)-x86/bin:$$PATH \
     LD_LIBRARY_PATH=$(BUILD_TOP)/prebuilts/tools-lineage/$(HOST_OS)-x86/lib:$$LD_LIBRARY_PATH \
     PERL5LIB=$(BUILD_TOP)/prebuilts/tools-lineage/common/perl-base

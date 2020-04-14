@@ -13,15 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# General entries for project pathmap.  Any entries listed here should
-# be device and hardware independent.
-$(call project-set-path-variant,ril,TARGET_RIL_VARIANT,hardware/ril)
-
-# Include board/platform macros
-include vendor/legion/build/core/utils.mk
-
-# Include vendor platform definitions
-include vendor/legion/build/core/vendor/*.mk
-
 # Rules for QCOM targets
 include $(TOPDIR)vendor/legion/build/core/qcom_target.mk
