@@ -108,7 +108,6 @@ PRODUCT_PACKAGES += \
     LPaper \
     GalleryGoPrebuilt \
     ThemePicker \
-    PixelThemesStub2019 \
     FontGoogleSansOverlay \
     Snap \
     Lawnchair \
