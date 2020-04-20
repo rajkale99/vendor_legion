@@ -105,7 +105,7 @@ PRODUCT_COPY_FILES += \
 
 # Legion packages
 PRODUCT_PACKAGES += \
-    LPaper \
+    LPaper-v1.0.0-release \
     GalleryGoPrebuilt \
     ThemePicker \
     FontGoogleSansOverlay \
