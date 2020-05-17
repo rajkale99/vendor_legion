@@ -67,9 +67,8 @@ $(foreach f,$(wildcard vendor/legion/prebuilt/common/etc/init/*.rc),\
 # Extra packages
 PRODUCT_PACKAGES += \
     Launcher3 \
-    messaging \
     ExactCalculator \
-    Stk \
+    Exchange2 \
     Terminal
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
@@ -182,12 +181,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     org.legion.fingerprint=$(PLATFORM_VERSION)-$(BUILD_ID)-$(LEGION_BUILD_DATE)
-
-# AOSP packages
-PRODUCT_PACKAGES += \
-    ExactCalculator \
-    Exchange2 \
-    Terminal
 
 # Extra tools in Legion
 PRODUCT_PACKAGES += \
