@@ -326,3 +326,6 @@ endif
 
 # Include Legion QS Style files
 include vendor/legion/QS/qsstyle.mk
+
+# Include Xtended Switch Styles
+include vendor/legion/Switch/switch.mk
