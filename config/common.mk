@@ -329,3 +329,6 @@ include vendor/legion/QS/qsstyle.mk
 
 # Include Legion Qs Tile Styles
 include vendor/legion/QsThemes/qstheme.mk
+
+# Include Legion Switch Styles
+include vendor/legion/Switch/switch.mk
