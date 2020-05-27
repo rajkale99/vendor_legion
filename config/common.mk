@@ -118,8 +118,7 @@ PRODUCT_PACKAGES += \
     Sqlite3 \
     Longshot \
     WallpaperPicker2 \
-    SafetyHubPrebuilt \
-    OPScreenRecorder
+    SafetyHubPrebuilt
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
