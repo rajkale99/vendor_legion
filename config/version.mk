@@ -13,7 +13,7 @@
 # limitations under the License.
 
 LEGION_MOD_VERSION := v10.0
-LEGIONVERSION := v2.8
+LEGIONVERSION := v2.9
 
 # ZIP TYPE
 ifeq ($(WITH_GAPPS), true)
