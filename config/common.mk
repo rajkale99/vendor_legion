@@ -118,7 +118,8 @@ PRODUCT_PACKAGES += \
     Sqlite3 \
     Longshot \
     WallpaperPicker2 \
-    SafetyHubPrebuilt
+    SafetyHubPrebuilt \
+    OmniStyle
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
