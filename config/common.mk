@@ -237,7 +237,7 @@ PRODUCT_PACKAGES += \
     rsync
 
 #Gvm
-include vendor/komodo/config/gvm.mk
+include vendor/legion/config/gvm.mk
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
