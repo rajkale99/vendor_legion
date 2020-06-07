@@ -262,7 +262,7 @@ endif
 endif
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay/common
-DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
+#DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
 
 #Speed tuning
 PRODUCT_DEXPREOPT_SPEED_APPS += \
