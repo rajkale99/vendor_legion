@@ -119,7 +119,8 @@ PRODUCT_PACKAGES += \
     Longshot \
     WallpaperPicker2 \
     SafetyHubPrebuilt \
-    OmniStyle
+    OmniStyle \
+    OPScreenRecorder
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
