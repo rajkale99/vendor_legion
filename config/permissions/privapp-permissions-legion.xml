@@ -112,5 +112,4 @@
 	<permission name="android.permission.SET_WALLPAPER_COMPONENT"/>
 	<permission name="android.permission.WRITE_SECURE_SETTINGS"/>
     </privapp-permissions>
-
 </permissions>

@@ -116,7 +116,6 @@ PRODUCT_PACKAGES += \
     Snap \
     Lawnchair \
     Sqlite3 \
-    Longshot \
     WallpaperPicker2 \
     SafetyHubPrebuilt \
     OmniStyle \
@@ -131,10 +130,6 @@ PRODUCT_COPY_FILES += \
 # Power whitelist
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-power-whitelist.xml
-
-# Hidden api whitelisted apps
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/sysconfig/legion-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/legion-hiddenapi-package-whitelist.xml
 
 # Hidden api whitelisted apps
 PRODUCT_COPY_FILES += \
