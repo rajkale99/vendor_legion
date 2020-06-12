@@ -120,7 +120,8 @@ PRODUCT_PACKAGES += \
     WallpaperPicker2 \
     SafetyHubPrebuilt \
     OmniStyle \
-    OPScreenRecorder
+    OPScreenRecorder \
+    StitchImage
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
