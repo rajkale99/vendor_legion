@@ -158,7 +158,6 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
 # Bootanimation
-PRODUCT_PACKAGES += \
 $(call inherit-product, vendor/legion/config/bootanimation.mk)
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
