@@ -82,7 +82,10 @@
 
     <!-- Misc -->
     <bool name="config_buttonTextAllCaps">false</bool>
-    <dimen name="config_dialogCornerRadius">25.0dip</dimen>
+
+    <!-- Radius -->
+    <dimen name="config_bottomDialogCornerRadius">16.0dip</dimen>
+    <dimen name="config_dialogCornerRadius">8.0dip</dimen>
     <dimen name="config_buttonCornerRadius">4.0dip</dimen>
     <dimen name="config_progressBarCornerRadius">1000.0dip</dimen>
 
