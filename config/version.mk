@@ -12,26 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LEGION_MOD_VERSION := v10.0
+ANDROID_VERSION := 10.0
 LEGIONVERSION := v2.9
 
 # ZIP TYPE
 ifeq ($(WITH_GAPPS), true)
-LEGION_BUILD_ZIP_TYPE := Q-GAPPS
+LEGION_BUILD_ZIP_TYPE := Gapps
 else
-LEGION_BUILD_ZIP_TYPE :=Q
+LEGION_BUILD_ZIP_TYPE := Vanilla
 endif
 
-# LEGION RELEASE VERSION
-ifndef LEGION_BUILD_TYPE
-    LEGION_BUILD_TYPE := UNOFFICIAL
-endif
-
-CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
+LEGION_BUILD_TYPE ?= Unofficial
+LEGION_BUILD_DATE := $(shell date +%Y%m%d)
+TARGET_PRODUCT_SHORT := $(subst legion_,,$(LEGION_BUILD))
 
 ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
    LIST = $(shell cat vendor/legion/legion.devices)
-   ifeq ($(filter $(CURRENT_DEVICE), $(LIST)), $(CURRENT_DEVICE))
+   ifeq ($(filter $(LEGION_BUILD), $(LIST)), $(LEGION_BUILD))
     IS_OFFICIAL=true
       LEGION_BUILD_TYPE := OFFICIAL
 
@@ -41,23 +38,15 @@ ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
 endif
 
 ifneq ($(IS_OFFICIAL), true)
-LEGION_BUILD_TYPE := UNOFFICIAL
-$(error Device is not official "$(CURRENT_DEVICE)")
+LEGION_BUILD_TYPE := Unofficial
+$(error Device is not official "$(LEGION_BUILD)")
 endif
 endif
-LEGION_VERSION := Legion-$(LEGIONVERSION)-$(CURRENT_DEVICE)-$(LEGION_BUILD_TYPE)-$(shell date -u +%Y%m%d)-$(LEGION_BUILD_ZIP_TYPE)
 
+LEGION_VERSION := LegionOS-$(LEGIONVERSION)-$(LEGION_BUILD)-$(LEGION_BUILD_DATE)-$(LEGION_BUILD_TYPE)-$(LEGION_BUILD_ZIP_TYPE)
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-  ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
-  ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
-  ro.legion.version=$(LEGION_VERSION) \
-  ro.modversion=$(LEGION_MOD_VERSION) \
-  ro.legion.device=$(CURRENT_DEVICE) \
-  ro.legionversion=$(LEGIONVERSION)
+LEGION_MOD_VERSION :=$(ANDROID_VERSION)-$(LEGIONVERSION)
 
+LEGION_DISPLAY_VERSION := LegionOS-$(LEGIONVERSION)-$(LEGION_BUILD_TYPE)
 
-LEGION_DISPLAY_VERSION := Legion-$(LEGIONVERSION)-$(LEGION_BUILD_TYPE)
-
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-  ro.legion.display.version=$(LEGION_DISPLAY_VERSION)
+LEGION_FINGERPRINT := LegionOS/$(LEGION_MOD_VERSION)/$(TARGET_PRODUCT_SHORT)/$(LEGION_BUILD_DATE)
