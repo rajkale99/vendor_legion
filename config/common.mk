@@ -114,12 +114,18 @@ PRODUCT_PACKAGES += \
     ThemePicker \
     FontGoogleSansOverlay \
     Snap \
+    Lawnchair \
     Sqlite3 \
     WallpaperPicker2 \
     SafetyHubPrebuilt \
     OmniStyle \
     OPScreenRecorder \
     StitchImage
+
+# Lawnchair
+PRODUCT_COPY_FILES += \
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lawnchair.xml \
+    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
 
 # Power whitelist
 PRODUCT_COPY_FILES += \
