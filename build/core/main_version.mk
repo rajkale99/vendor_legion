@@ -9,4 +9,4 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.legionversion=$(LEGIONVERSION) \
     ro.modversion=$(LEGION_MOD_VERSION) \
     ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
-    ro.legion.device=$(CURRENT_DEVICE)
+    ro.legion.device=$(LEGION_BUILD)

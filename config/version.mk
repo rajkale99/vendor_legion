@@ -1,4 +1,4 @@
-# Copyright (C) 2018 LegionOS Project
+# Copyright (C) 2018 LegionOS Project 2020
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,11 @@
 # limitations under the License.
 
 ANDROID_VERSION := 10.0
-LEGIONVERSION := v2.9
+LEGIONVERSION := v2.10
+
+LEGION_BUILD_TYPE ?= Unofficial
+LEGION_BUILD_DATE := $(shell date +%Y%m%d)
+TARGET_PRODUCT_SHORT := $(subst legion_,,$(LEGION_BUILD))
 
 # ZIP TYPE
 ifeq ($(WITH_GAPPS), true)
@@ -22,10 +26,7 @@ else
 LEGION_BUILD_ZIP_TYPE := Vanilla
 endif
 
-LEGION_BUILD_TYPE ?= Unofficial
-LEGION_BUILD_DATE := $(shell date +%Y%m%d)
-TARGET_PRODUCT_SHORT := $(subst legion_,,$(LEGION_BUILD))
-
+# OFFICIAL_DEVICES
 ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
    LIST = $(shell cat vendor/legion/legion.devices)
    ifeq ($(filter $(LEGION_BUILD), $(LIST)), $(LEGION_BUILD))
@@ -34,7 +35,6 @@ ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
 
     PRODUCT_PACKAGES += \
 	Updater
-
 endif
 
 ifneq ($(IS_OFFICIAL), true)
@@ -43,6 +43,7 @@ $(error Device is not official "$(LEGION_BUILD)")
 endif
 endif
 
+# MAIN
 LEGION_VERSION := LegionOS-$(LEGIONVERSION)-$(LEGION_BUILD)-$(LEGION_BUILD_DATE)-$(LEGION_BUILD_TYPE)-$(LEGION_BUILD_ZIP_TYPE)
 
 LEGION_MOD_VERSION :=$(ANDROID_VERSION)-$(LEGIONVERSION)
