@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#Bootanimation
-
-TARGET_BOOT_ANIMATION_RES ?= undefined
+# Bootanimation
 ifeq ($(TARGET_BOOT_ANIMATION_RES),1080)
-     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/1080.zip:system/media/bootanimation.zip
-else ifeq ($(TARGET_BOOT_ANIMATION_RES),undefined)
-     $(warning Target bootanimation res is undefined, using generic bootanimation )
-     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/bootanimation.zip:system/media/bootanimation.zip
+     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
+else ifeq ($(TARGET_BOOT_ANIMATION_RES),720)
+     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/720.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 else
-     $(warning Defined bootanimation res is wrong, using generic bootanimation )
-     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/bootanimation.zip:system/media/bootanimation.zip
+    ifeq ($(TARGET_BOOT_ANIMATION_RES),)
+        $(warning "LegionOS: TARGET_BOOT_ANIMATION_RES is undefined, assuming 1080p")
+    else
+        $(warning "LegionOS: Current bootanimation res is not supported, forcing 1080p")
+    endif
+    PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
+
