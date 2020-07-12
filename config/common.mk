@@ -56,11 +56,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/backup.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/backup.xml
 
-# Fonts
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,vendor/legion/prebuilt/fonts,$(TARGET_COPY_OUT_PRODUCT)/fonts) \
-	vendor/legion/prebuilt/etc/fonts_customization.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/fonts_customization.xml
-
 # Legion-specific broadcast actions whitelist
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-sysconfig.xml
@@ -71,10 +66,16 @@ $(foreach f,$(wildcard vendor/legion/prebuilt/common/etc/init/*.rc),\
 
 # Extra packages
 PRODUCT_PACKAGES += \
-    Launcher3 \
     ExactCalculator \
     Exchange2 \
-    Terminal
+    Launcher3 \
+    OmniStyle \
+    Snap \
+    Sqlite3 \
+    StitchImage \
+    Terminal \
+    ThemePicker \
+    WallpaperPicker2
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
@@ -106,21 +107,6 @@ PRODUCT_COPY_FILES += \
 # Hidden API whitelist
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/legion-hiddenapi-package-whitelist.xml
-
-# Legion packages
-PRODUCT_PACKAGES += \
-    LPaper-v1.0.0-release \
-    GalleryGoPrebuilt \
-    ThemePicker \
-    FontGoogleSansOverlay \
-    Snap \
-    Lawnchair \
-    Sqlite3 \
-    WallpaperPicker2 \
-    SafetyHubPrebuilt \
-    OmniStyle \
-    OPScreenRecorder \
-    StitchImage
 
 # Lawnchair
 PRODUCT_COPY_FILES += \
@@ -180,9 +166,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.sys.disable_rescue=true \
     ro.config.calibration_cad=/system/etc/calibration_cad.xml
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    org.legion.fingerprint=$(PLATFORM_VERSION)-$(BUILD_ID)-$(LEGION_BUILD_DATE)
-
 # Extra tools in Legion
 PRODUCT_PACKAGES += \
     7z \
@@ -232,9 +215,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     rsync
 
-#Gvm
-include vendor/legion/config/gvm.mk
-
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.storage_manager.enabled=true
@@ -257,58 +237,17 @@ PRODUCT_PACKAGES += \
 endif
 endif
 
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay/common
-#DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
+# Common overlay
+DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
 
 #Speed tuning
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     Settings \
     SystemUI
 
-# Include Legion's theme files
-include vendor/legion/themes/backgrounds/themes.mk
-
 # Allow overlays to be excluded from enforcing RRO
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
 
-# Legion Stuff - Copy to System fonts
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/fonts/gobold/Gobold.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Gobold.ttf \
-    vendor/legion/prebuilt/fonts/gobold/Gobold-Italic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Gobold-Italic.ttf \
-    vendor/legion/prebuilt/fonts/gobold/GoboldBold.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoboldBold.ttf \
-    vendor/legion/prebuilt/fonts/gobold/GoboldBold-Italic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoboldBold-Italic.ttf \
-    vendor/legion/prebuilt/fonts/gobold/GoboldThinLight.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoboldThinLight.ttf \
-    vendor/legion/prebuilt/fonts/gobold/GoboldThinLight-Italic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoboldThinLight-Italic.ttf \
-    vendor/legion/prebuilt/fonts/roadrage/road_rage.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/RoadRage-Regular.ttf \
-    vendor/legion/prebuilt/fonts/neoneon/neoneon.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Neoneon-Regular.ttf \
-    vendor/legion/prebuilt/fonts/mexcellent/mexcellent.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Mexcellent-Regular.ttf \
-    vendor/legion/prebuilt/fonts/burnstown/burnstown.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Burnstown-Regular.ttf \
-    vendor/legion/prebuilt/fonts/dumbledor/dumbledor.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Dumbledor-Regular.ttf \
-    vendor/legion/prebuilt/fonts/PhantomBold/PhantomBold.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/PhantomBold-Regular.ttf \
-    vendor/legion/prebuilt/fonts/snowstorm/snowstorm.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Snowstorm-Regular.ttf \
-    vendor/legion/prebuilt/fonts/vcrosd/vcr_osd_mono.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/ThemeableFont-Regular.ttf \
-    vendor/legion/prebuilt/fonts/Shamshung/Shamshung.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Shamshung.ttf \
-    vendor/legion/prebuilt/fonts/Aclonica/Aclonica.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Aclonica.ttf \
-    vendor/legion/prebuilt/fonts/Amarante/Amarante.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Amarante.ttf \
-    vendor/legion/prebuilt/common/fonts/AntipastoPro/AntipastoPro.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/AntipastoPro.ttf \
-    vendor/legion/prebuilt/common/fonts/EvolveSans/EvolveSans.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/EvolveSans.ttf \
-    vendor/legion/prebuilt/common/fonts/Fucek/Fucek.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Fucek.ttf \
-    vendor/legion/prebuilt/common/fonts/LemonMilk/LemonMilk.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/LemonMilk.ttf \
-    vendor/legion/prebuilt/common/fonts/Oduda/Oduda.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Oduda.ttf \
-    vendor/legion/prebuilt/common/fonts/ReemKufi/ReemKufi.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/ReemKufi.ttf \
-    vendor/legion/prebuilt/common/fonts/GoogleSansMedium/GoogleSansMedium.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/GoogleSansMedium.ttf \
-    vendor/legion/prebuilt/common/fonts/SimpleDay/SimpleDay.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SimpleDay.ttf \
-    vendor/legion/prebuilt/fonts/Bariol/Bariol-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Bariol.ttf \
-    vendor/legion/prebuilt/fonts/Cagliostro/Cagliostro-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Cagliostro-Regular.ttf \
-    vendor/legion/prebuilt/fonts/Coolstory/Coolstory-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Coolstory-Regular.ttf \
-    vendor/legion/prebuilt/fonts/Comic_Sans.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Comic_Sans.ttf \
-    vendor/legion/prebuilt/fonts/LGSmartGothic/LGSmartGothic.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/LGSmartGothic.ttf \
-    vendor/legion/prebuilt/fonts/Rosemary/Rosemary-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Rosemary-Regular.ttf \
-    vendor/legion/prebuilt/fonts/SonySketch/SonySketch.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SonySketch.ttf \
-    vendor/legion/prebuilt/fonts/SamsungOne.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SamsungOne.ttf \
-    vendor/legion/prebuilt/fonts/SlateFromOP-Light.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SlateFromOP-Light.ttf \
-    vendor/legion/prebuilt/fonts/SlateFromOP-Regular.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/SlateFromOP-Regular.ttf \
-    vendor/legion/prebuilt/fonts/Surfer/Surfer.ttf:$(TARGET_COPY_OUT_SYSTEM)/fonts/Surfer.ttf
 
 -include vendor/legion/config/partner_gms.mk
 -include vendor/legion/config/version.mk
@@ -317,18 +256,5 @@ PRODUCT_COPY_FILES += \
 # Enable ccache
 USE_CCACHE := true
 
-# Fod
-DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
-ifeq ($(EXTRA_FOD_ANIMATIONS),true)
-DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/fod
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay/fod
-endif
-
-# Include Legion QS Style files
-include vendor/legion/QS/qsstyle.mk
-
-# Include Legion Qs Tile Styles
-include vendor/legion/QsThemes/qstheme.mk
-
-# Include Legion Switch Styles
-include vendor/legion/Switch/switch.mk
+# Include Vendor LegionParts
+include vendor/LegionParts/parts.mk
