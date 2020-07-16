@@ -1,6 +1,8 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
+$(call inherit-product-if-exists, external/motorola/faceunlock/config.mk)
+
 PRODUCT_NAME := legion
 PRODUCT_BRAND := legion
 PRODUCT_DEVICE := generic
@@ -252,18 +254,6 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
 -include vendor/legion/config/partner_gms.mk
 -include vendor/legion/config/version.mk
 -include vendor/legion/gapps.mk
-
-# Face Unlock
-ifeq ($(LEGION_BUILD_TYPE), Official)
-TARGET_FACE_UNLOCK_SUPPORTED := true
-ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
-PRODUCT_PACKAGES += \
-    FaceUnlockService
-TARGET_FACE_UNLOCK_SUPPORTED := true
-endif
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.face.moto_unlock_service=$(TARGET_FACE_UNLOCK_SUPPORTED)
-endif
 
 # Enable ccache
 USE_CCACHE := true
