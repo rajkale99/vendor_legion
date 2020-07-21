@@ -80,7 +80,12 @@ PRODUCT_COPY_FILES += \
 
 # Copy all Legion-specific init rc files
 $(foreach f,$(wildcard vendor/legion/prebuilt/common/etc/init/*.rc),\
-	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
+        $(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
+
+# Device Personalization Services Permission
+PRODUCT_COPY_FILES += \
+    vendor/legion/config/permissions/com.google.android.as.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.google.android.as.xml \
+    vendor/legion/config/permissions/com.google.android.as.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.as.xml
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
