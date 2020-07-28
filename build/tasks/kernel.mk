@@ -168,8 +168,7 @@ MODULES_INTERMEDIATES := $(KERNEL_BUILD_OUT_PREFIX)$(call intermediates-dir-for,
 PATH_OVERRIDE :=
 ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     ifneq ($(TARGET_KERNEL_CLANG_VERSION),)
-        # Find the clang-* directory containing the specified version
-        KERNEL_CLANG_VERSION := $(shell find $(BUILD_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/ -name AndroidVersion.txt -exec grep -l $(TARGET_KERNEL_CLANG_VERSION) "{}" \; | sed -e 's|/AndroidVersion.txt$$||g;s|^.*/||g')
+        KERNEL_CLANG_VERSION := clang-$(TARGET_KERNEL_CLANG_VERSION)
     else
         # Use the default version of clang if TARGET_KERNEL_CLANG_VERSION hasn't been set by the device config
         KERNEL_CLANG_VERSION := $(LLVM_PREBUILTS_VERSION)
@@ -178,20 +177,16 @@ ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     ifeq ($(KERNEL_ARCH),arm64)
         KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=aarch64-linux-gnu-
     else ifeq ($(KERNEL_ARCH),arm)
-        KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=arm-linux-gnueabi-
+        KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=arm-linux-gnu-
     else ifeq ($(KERNEL_ARCH),x86)
         KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=x86_64-linux-gnu-
     endif
-    PATH_OVERRIDE += PATH=$(TARGET_KERNEL_CLANG_PATH)/bin:$$PATH LD_LIBRARY_PATH=$(TARGET_KERNEL_CLANG_PATH)/lib64:$(TARGET_KERNEL_CLANG_PATH)/lib:$$LD_LIBRARY_PATH
+    PATH_OVERRIDE += PATH=$(TARGET_KERNEL_CLANG_PATH)/bin:$$PATH LD_LIBRARY_PATH=$(TARGET_KERNEL_CLANG_PATH)/lib64:$$LD_LIBRARY_PATH
     ifeq ($(KERNEL_CC),)
         KERNEL_CC := CC="$(CCACHE_BIN) clang"
     endif
-    ifeq ($(TARGET_KERNEL_CLANG_VERSION),11)
-        KERNEL_CC += AR=llvm-ar
-        KERNEL_CC += NM=llvm-nm
-        KERNEL_CC += OBJCOPY=llvm-objcopy
-        KERNEL_CC += OBJDUMP=llvm-objdump
-        KERNEL_CC += STRIP=llvm-strip
+    ifeq ($(KERNEL_LD),)
+        KERNEL_LD :=
     endif
 endif
 

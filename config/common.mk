@@ -3,11 +3,9 @@ $(call inherit-product-if-exists, vendor/extra/product.mk)
 
 $(call inherit-product-if-exists, external/motorola/faceunlock/config.mk)
 
-PRODUCT_NAME := legion
-PRODUCT_BRAND := legion
-PRODUCT_DEVICE := generic
+PRODUCT_BRAND ?= Legion-OS
 
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_DISPLAY_ID=$(TARGET_PRODUCT)-$(PLATFORM_VERSION)-$(BUILD_ID)
+PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -18,7 +16,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 endif
 
 # Default notification/alarm sounds
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_PRODUCT_PROPERTIES += \
     ro.config.notification_sound=Argon.ogg \
     ro.config.alarm_alert=Hassium.ogg
 
@@ -30,21 +28,34 @@ else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
+# Enable WiFi Display
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.wfd.nohdcp=1 \
+    persist.debug.wfd.enable=1 \
+    persist.sys.wfd.virtual=0
+
+# TEMP: Enable transitional log for Privileged permissions
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.control_privapp_permissions=log
+
+# Storage manager
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.storage_manager.enabled=true
+
+# Media
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    media.recorder.show_manufacturer_and_model=true
+
 # Tethering - allow without requiring a provisioning app
 # (for devices that check this)
 PRODUCT_PROPERTY_OVERRIDES += \
     net.tethering.noprovisioning=true
-
-# APN
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
     vendor/legion/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
     vendor/legion/prebuilt/common/bin/50-legion.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-legion.sh \
-    vendor/legion/prebuilt/common/bin/blacklist:$(TARGET_COPY_OUT_SYSTEM)/addon.d/blacklist \
     vendor/legion/prebuilt/common/bin/system-mount.sh:install/bin/system-mount.sh
 
 ifneq ($(AB_OTA_PARTITIONS),)
@@ -52,6 +63,11 @@ PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
     vendor/legion/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
     vendor/legion/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
+
+ifneq ($(TARGET_BUILD_VARIANT),user)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.ota.allow_downgrade=true
+endif
 endif
 
 # Backup Services whitelist
@@ -66,27 +82,9 @@ PRODUCT_COPY_FILES += \
 $(foreach f,$(wildcard vendor/legion/prebuilt/common/etc/init/*.rc),\
 	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
 
-# Extra packages
-PRODUCT_PACKAGES += \
-    ExactCalculator \
-    Exchange2 \
-    Launcher3 \
-    OmniStyle \
-    Snap \
-    Sqlite3 \
-    StitchImage \
-    Terminal \
-    ThemePicker \
-    WallpaperPicker2
-
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
     vendor/legion/prebuilt/common/lib/content-types.properties:$(TARGET_COPY_OUT_SYSTEM)/lib/content-types.properties
-
-# Markup libs
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/google/lib/libsketchology_native.so:system/product/lib/libsketchology_native.so \
-    vendor/legion/prebuilt/google/lib64/libsketchology_native.so:system/product/lib64/libsketchology_native.so
 
 # Enable Android Beam on all targets
 PRODUCT_COPY_FILES += \
@@ -102,26 +100,21 @@ PRODUCT_COPY_FILES += \
 
 # This is Legion!
 PRODUCT_COPY_FILES += \
-   vendor/legion/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-google_prebuilt.xml \
-   vendor/legion/config/permissions/privapp-permissions-legion.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-legion.xml \
-   vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/wallpaper_privapp-permissions.xml
+    vendor/legion/config/permissions/privapp-permissions-legion-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-legion.xml \
+    vendor/legion/config/permissions/privapp-permissions-legion-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-legion.xml
 
 # Hidden API whitelist
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/legion-hiddenapi-package-whitelist.xml
 
-# Lawnchair
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lawnchair.xml \
-    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
-
 # Power whitelist
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-power-whitelist.xml
 
-# Hidden api whitelisted apps
+# Lawnchair
 PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/sysconfig/legion-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/legion-hiddenapi-package-whitelist.xml
+    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lawnchair.xml \
+    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
 
 # Include AOSP audio files
 include vendor/legion/config/aosp_audio.mk
@@ -148,6 +141,9 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 # Bootanimation
 $(call inherit-product, vendor/legion/config/bootanimation.mk)
 
+# LegionParts
+$(call inherit-product, vendor/LegionParts/parts.mk)
+
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     keyguard.no_require_sim=true \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
@@ -167,6 +163,19 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.opa.eligible_device=true \
     persist.sys.disable_rescue=true \
     ro.config.calibration_cad=/system/etc/calibration_cad.xml
+
+# Legion packages
+PRODUCT_PACKAGES += \
+    OmniStyle \
+    Snap \
+    StitchImage \
+    ThemePicker \
+    WallpaperPicker2
+
+# Extra packages
+PRODUCT_PACKAGES += \
+    ExactCalculator \
+    Terminal
 
 # Extra tools in Legion
 PRODUCT_PACKAGES += \
@@ -213,43 +222,32 @@ PRODUCT_PACKAGES += \
     ssh-keygen \
     start-ssh
 
+# Allows registering device to Google easier for gapps
+# Integrates package for easier Google Pay fixing
+PRODUCT_PACKAGES += \
+    sqlite3
+
 # rsync
 PRODUCT_PACKAGES += \
     rsync
-
-# Storage manager
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.storage_manager.enabled=true
-
-# Media
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    media.recorder.show_manufacturer_and_model=true
 
 # These packages are excluded from user builds
 PRODUCT_PACKAGES_DEBUG += \
     procmem
 
-# Conditionally build in su
-ifneq ($(TARGET_BUILD_VARIANT),user)
+# Root
 PRODUCT_PACKAGES += \
     adb_root
-ifeq ($(WITH_SU),true)
-PRODUCT_PACKAGES += \
-    su
-endif
-endif
+
+# Dex preopt
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    SystemUI
 
 # Common overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/legion/overlay/common
 
-#Speed tuning
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    Settings \
-    SystemUI
-
 # Allow overlays to be excluded from enforcing RRO
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
-
 
 -include vendor/legion/config/partner_gms.mk
 -include vendor/legion/config/version.mk
@@ -257,6 +255,3 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
 
 # Enable ccache
 USE_CCACHE := true
-
-# Include Vendor LegionParts
-include vendor/LegionParts/parts.mk

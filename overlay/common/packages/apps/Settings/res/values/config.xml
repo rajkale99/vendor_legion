@@ -39,5 +39,4 @@
     <!-- Emergency app intent action -->
     <string name="config_emergency_intent_action">com.google.android.safetyhub.SAFETY_HUB</string>
 
-    <bool name="config_show_system_update_settings">false</bool>
 </resources>

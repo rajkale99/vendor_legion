@@ -4,9 +4,8 @@
 #
 
 export C=/tmp/backupdir
-export S=$2
-
-export ADDOND_VERSION=1
+export SYSDEV="$(readlink -nf "$2")"
+export SYSFS="$3"
 
 # Scripts in /system/addon.d expect to find backuptool.functions in /tmp
 cp -f /tmp/install/bin/backuptool.functions /tmp
@@ -16,18 +15,6 @@ preserve_addon_d() {
   if [ -d $S/addon.d/ ]; then
     mkdir -p /tmp/addon.d/
     cp -a $S/addon.d/* /tmp/addon.d/
-
-    # Discard any scripts that aren't at least our version level
-    for f in /postinstall/tmp/addon.d/*sh; do
-      SCRIPT_VERSION=$(grep "^# ADDOND_VERSION=" $f | cut -d= -f2)
-      if [ -z "$SCRIPT_VERSION" ]; then
-        SCRIPT_VERSION=1
-      fi
-      if [ $SCRIPT_VERSION -lt $ADDOND_VERSION ]; then
-        rm $f
-      fi
-    done
-
     chmod 755 /tmp/addon.d/*.sh
   fi
 }
@@ -45,39 +32,9 @@ restore_addon_d() {
 check_prereq() {
 # If there is no build.prop file the partition is probably empty.
 if [ ! -r $S/build.prop ]; then
-    return 0
+  echo "Backup/restore is not possible. Partition is probably empty"
+  return 1
 fi
-return 1
-}
-
-check_blacklist() {
-  if [ -f $S/addon.d/blacklist -a -d /$1/addon.d/ ]; then
-      ## Discard any known bad backup scripts
-      cd /$1/addon.d/
-      for f in *sh; do
-          [ -f $f ] || continue
-          s=$(md5sum $f | cut -c-32)
-          grep -q $s $S/addon.d/blacklist && rm -f $f
-      done
-  fi
-}
-
-check_whitelist() {
-  found=0
-  if [ -f $S/addon.d/whitelist ];then
-      ## forcefully keep any version-independent stuff
-      cd /$1/addon.d/
-      for f in *sh; do
-          s=$(md5sum $f | cut -c-32)
-          grep -q $s $S/addon.d/whitelist
-          if [ $? -eq 0 ]; then
-              found=1
-          else
-              rm -f $f
-          fi
-      done
-  fi
-  return $found
 }
 
 # Execute /system/addon.d/*.sh scripts with $1 parameter
@@ -89,33 +46,55 @@ if [ -d /tmp/addon.d/ ]; then
 fi
 }
 
+determine_system_mount() {
+  if grep -q -e"^$SYSDEV" /proc/mounts; then
+    umount $(grep -e"^$SYSDEV" /proc/mounts | cut -d" " -f2)
+  fi
+
+  if [ -d /mnt/system ]; then
+    SYSMOUNT="/mnt/system"
+  elif [ -d /system_root ]; then
+    SYSMOUNT="/system_root"
+  else
+    SYSMOUNT="/system"
+  fi
+
+  export S=$SYSMOUNT/system
+}
+
+mount_system() {
+  mount -t $SYSFS $SYSDEV $SYSMOUNT -o rw,discard
+}
+
+unmount_system() {
+  umount $SYSMOUNT
+}
+
+determine_system_mount
+
 case "$1" in
   backup)
-    mkdir -p $C
+    mount_system
     if check_prereq; then
-        if check_whitelist system; then
-            exit 127
-        fi
+      mkdir -p $C
+      preserve_addon_d
+      run_stage pre-backup
+      run_stage backup
+      run_stage post-backup
     fi
-    check_blacklist system
-    preserve_addon_d
-    run_stage pre-backup
-    run_stage backup
-    run_stage post-backup
+    unmount_system
   ;;
   restore)
+    mount_system
     if check_prereq; then
-        if check_whitelist tmp; then
-            exit 127
-        fi
+      run_stage pre-restore
+      run_stage restore
+      run_stage post-restore
+      restore_addon_d
+      rm -rf $C
+      sync
     fi
-    check_blacklist tmp
-    run_stage pre-restore
-    run_stage restore
-    run_stage post-restore
-    restore_addon_d
-    rm -rf $C
-    sync
+    unmount_system
   ;;
   *)
     echo "Usage: $0 {backup|restore}"
