@@ -1,13 +1,13 @@
 function __print_legion_functions_help() {
 cat <<EOF
-Additional Legion-OS functions:
+Additional LegionOS functions:
 - cout:            Changes directory to out.
 - mmp:             Builds all of the modules in the current directory and pushes them to the device.
 - mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.
 - mmmp:            Builds all of the modules in the supplied directories and pushes them to the device.
 - aospremote:      Add git remote for matching AOSP repository.
 - cafremote:       Add git remote for matching CodeAurora repository.
-- githubremote:    Add git remote for Legion-OS Github.
+- githubremote:    Add git remote for LegionOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -53,7 +53,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka bacon
+        mka legion
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -83,6 +83,17 @@ function breakfast()
             lunch legion_$target-$variant
         fi
     fi
+
+    # Dirty fix for prebuilt recovery
+    local TARGET_PREBUILT_RECOVERY_RAMDISK_CPIO=$(get_abs_build_var TARGET_PREBUILT_RECOVERY_RAMDISK_CPIO)
+    local TARGET_RECOVERY_ROOT_OUT=$(get_abs_build_var TARGET_RECOVERY_ROOT_OUT)
+    if [ ! -z "$TARGET_PREBUILT_RECOVERY_RAMDISK_CPIO" ]
+    then
+        if [ -d $TARGET_RECOVERY_ROOT_OUT ] 
+        then
+            rm -rf $TARGET_RECOVERY_ROOT_OUT
+        fi
+    fi
     return $?
 }
 
@@ -91,35 +102,19 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/legion-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/LegionOS-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
         fi
-        adb start-server # Prevent unexpected starting server message from adb get-state in the next line
-        if [ $(adb get-state) != device -a $(adb shell 'test -e /sbin/recovery 2> /dev/null; echo $?') != 0 ] ; then
-            echo "No device is online. Waiting for one..."
-            echo "Please connect USB and/or enable USB debugging"
-            until [ $(adb get-state) = device -o $(adb shell 'test -e /sbin/recovery 2> /dev/null; echo $?') = 0 ];do
-                sleep 1
-            done
-            echo "Device Found.."
-        fi
+        echo "Waiting for device..."
+        adb wait-for-device-recovery
+        echo "Found device"
         if (adb shell getprop ro.legion.device | grep -q "$LEGION_BUILD"); then
-            # if adbd isn't root we can't write to /cache/recovery/
-            adb root
-            sleep 1
-            adb wait-for-device
-            cat << EOF > /tmp/command
---sideload_auto_reboot
-EOF
-            if adb push /tmp/command /cache/recovery/ ; then
-                echo "Rebooting into recovery for sideload installation"
-                adb reboot recovery
-                adb wait-for-sideload
-                adb sideload $ZIPPATH
-            fi
-            rm /tmp/command
+            echo "Rebooting to sideload for install"
+            adb reboot sideload-auto-reboot
+            adb wait-for-sideload
+            adb sideload $ZIPPATH
         else
             echo "The connected device does not appear to be $LEGION_BUILD, run away!"
         fi
@@ -338,23 +333,12 @@ function installboot()
             return 1
         fi
     fi
-    adb start-server
-    adb wait-for-online
+    adb wait-for-device-recovery
     adb root
-    sleep 1
-    adb wait-for-online shell mount /system 2>&1 > /dev/null
-    adb wait-for-online remount
+    adb wait-for-device-recovery
     if (adb shell getprop ro.legion.device | grep -q "$LEGION_BUILD");
     then
         adb push $OUT/boot.img /cache/
-        if [ -e "$OUT/system/lib/modules/*" ];
-        then
-            for i in $OUT/system/lib/modules/*;
-            do
-                adb push $i /system/lib/modules/
-            done
-            adb shell chmod 644 /system/lib/modules/*
-        fi
         adb shell dd if=/cache/boot.img of=$PARTITION
         adb shell rm -rf /cache/boot.img
         echo "Installation complete."
@@ -365,7 +349,7 @@ function installboot()
 
 function installrecovery()
 {
-    if [ ! -e "$OUT/recovery/root/etc/system/recovery.fstab" ];
+    if [ ! -e "$OUT/recovery/root/system/etc/recovery.fstab" ];
     then
         echo "No recovery.fstab found. Build recovery first."
         return 1
@@ -387,12 +371,9 @@ function installrecovery()
             return 1
         fi
     fi
-    adb start-server
-    adb wait-for-online
+    adb wait-for-device-recovery
     adb root
-    sleep 1
-    adb wait-for-online shell mount /system 2>&1 >> /dev/null
-    adb wait-for-online remount
+    adb wait-for-device-recovery
     if (adb shell getprop ro.legion.device | grep -q "$LEGION_BUILD");
     then
         adb push $OUT/recovery.img /cache/
@@ -424,7 +405,7 @@ function cmka() {
     if [ ! -z "$1" ]; then
         for i in "$@"; do
             case $i in
-                bacon|otapackage|systemimage)
+                legion|otapackage|systemimage)
                     mka installclean
                     mka $i
                     ;;
@@ -448,7 +429,7 @@ function repolastsync() {
 }
 
 function reposync() {
-    repo sync -j 4 "$@"
+    repo sync -j 10 "$@"
 }
 
 function repodiff() {
@@ -463,8 +444,7 @@ function repodiff() {
 # Return success if adb is up and not in recovery
 function _adb_connected {
     {
-        if [[ "$(adb get-state)" == device &&
-              "$(adb shell 'test -e /sbin/recovery; echo $?')" != 0 ]]
+        if [[ "$(adb get-state)" == device ]]
         then
             return 0
         fi
@@ -504,7 +484,6 @@ function dopush()
         adb connect "$TCPIPPORT"
     fi
     adb wait-for-device &> /dev/null
-    sleep 0.3
     adb remount &> /dev/null
 
     mkdir -p $OUT
@@ -552,11 +531,13 @@ EOF
         rm -f $OUT/.chkfileperm.sh
     fi
 
+    RELOUT=$(echo $OUT | sed "s#^${ANDROID_BUILD_TOP}/##")
+
     stop_n_start=false
-    for TARGET in $(echo $LOC | tr " " "\n" | sed "s#.*$OUT##" | sort | uniq); do
-        # Make sure file is in $OUT/system or $OUT/data
+    for TARGET in $(echo $LOC | tr " " "\n" | sed "s#.*${RELOUT}##" | sort | uniq); do
+        # Make sure file is in $OUT/system, $OUT/data, $OUT/odm, $OUT/oem, $OUT/product, $OUT/product_services or $OUT/vendor
         case $TARGET in
-            /system/*|/data/*)
+            /system/*|/data/*|/odm/*|/oem/*|/product/*|/product_services/*|/vendor/*)
                 # Get out file from target (i.e. /system/bin/adb)
                 FILE=$OUT$TARGET
             ;;
