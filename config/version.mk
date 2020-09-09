@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ANDROID_VERSION := 10.0
-LEGIONVERSION := v2.11
+LEGIONVERSION := v2.11.5
 
 LEGION_BUILD_TYPE ?= Unofficial
 LEGION_BUILD_DATE := $(shell date +%Y%m%d)
