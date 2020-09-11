@@ -116,11 +116,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/legion-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-power-whitelist.xml
 
-# Lawnchair
-PRODUCT_COPY_FILES += \
-    vendor/legion/prebuilt/common/etc/permissions/privapp-permissions-lawnchair.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lawnchair.xml \
-    vendor/legion/prebuilt/common/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
-
 # Include AOSP audio files
 include vendor/legion/config/aosp_audio.mk
 
@@ -146,9 +141,6 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 # Bootanimation
 $(call inherit-product, vendor/legion/config/bootanimation.mk)
 
-# LegionParts
-$(call inherit-product, vendor/LegionParts/parts.mk)
-
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     keyguard.no_require_sim=true \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
@@ -171,15 +163,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Legion packages
 PRODUCT_PACKAGES += \
-    OmniStyle \
-    Snap \
-    StitchImage \
     ThemePicker \
     WallpaperPicker2
 
 # Extra packages
 PRODUCT_PACKAGES += \
-    ExactCalculator \
     Terminal
 
 # Extra tools in Legion
@@ -256,7 +244,6 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/legion/overlay
 
 -include vendor/legion/config/partner_gms.mk
 -include vendor/legion/config/version.mk
--include vendor/legion/gapps.mk
 
 # Enable ccache
 USE_CCACHE := true
