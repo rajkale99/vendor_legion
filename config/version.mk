@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ANDROID_VERSION := 10.0
-LEGIONVERSION := v2.11.5
+ANDROID_VERSION := 11.0
+LEGIONVERSION := v3.0
 
 LEGION_BUILD_TYPE ?= Unofficial
 LEGION_BUILD_DATE := $(shell date +%Y%m%d)
@@ -33,8 +33,6 @@ ifeq ($(LEGION_BUILD_TYPE), OFFICIAL)
     IS_OFFICIAL=true
       LEGION_BUILD_TYPE := OFFICIAL
 
-    PRODUCT_PACKAGES += \
-	Updater
 endif
 
 ifneq ($(IS_OFFICIAL), true)

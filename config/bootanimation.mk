@@ -25,4 +25,3 @@ else
     endif
     PRODUCT_COPY_FILES += vendor/legion/prebuilt/common/media/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
-

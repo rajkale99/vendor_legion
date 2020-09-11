@@ -251,8 +251,7 @@ if __name__ == '__main__':
 
     for project in projects:
         name = project.get('name')
-        # when name and path are equal, "repo manifest" doesn't return a path at all, so fall back to name
-        path = project.get('path', name)
+        path = project.get('path')
         revision = project.get('revision')
         if revision is None:
             for remote in remotes:
@@ -367,10 +366,6 @@ if __name__ == '__main__':
             project_path = project_name_to_data[item['project']][item['branch']]
         elif args.path:
             project_path = args.path
-        elif item['project'] in project_name_to_data and len(project_name_to_data[item['project']]) == 1:
-            local_branch = list(project_name_to_data[item['project']])[0]
-            project_path = project_name_to_data[item['project']][local_branch]
-            print('WARNING: Project {0} has a different branch ("{1}" != "{2}")'.format(project_path, local_branch, item['branch']))
         elif args.ignore_missing:
             print('WARNING: Skipping {0} since there is no project directory for: {1}\n'.format(item['id'], item['project']))
             continue
@@ -393,11 +388,7 @@ if __name__ == '__main__':
         for i in range(0, check_picked_count):
             if subprocess.call(['git', 'cat-file', '-e', 'HEAD~{0}'.format(i)], cwd=project_path, stderr=open(os.devnull, 'wb')):
                 continue
-            output = subprocess.check_output(['git', 'show', '-q', 'HEAD~{0}'.format(i)], cwd=project_path)
-            # make sure we have a string on Python 3
-            if isinstance(output, bytes):
-                output = output.decode('utf-8')
-            output = output.split()
+            output = subprocess.check_output(['git', 'show', '-q', 'HEAD~{0}'.format(i)], cwd=project_path).split()
             if 'Change-Id:' in output:
                 head_change_id = ''
                 for j,t in enumerate(reversed(output)):
@@ -413,7 +404,7 @@ if __name__ == '__main__':
 
         # Print out some useful info
         if not args.quiet:
-            print(u'--> Subject:       "{0}"'.format(item['subject']))
+            print('--> Subject:       "{0}"'.format(item['subject'].encode('utf-8')))
             print('--> Project path:  {0}'.format(project_path))
             print('--> Change number: {0} (Patch Set {1})'.format(item['id'], item['patchset']))
 

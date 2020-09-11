@@ -5,6 +5,8 @@ ORIG_PATH := $(shell cat $(OUT_DIR)/.path_interposer_origpath)
 endif
 EXPORT_TO_SOONG := \
     KERNEL_ARCH \
+    KERNEL_CC \
+    KERNEL_CLANG_TRIPLE \
     KERNEL_BUILD_OUT_PREFIX \
     KERNEL_CROSS_COMPILE \
     KERNEL_MAKE_FLAGS \
@@ -27,3 +29,4 @@ define addVar
 endef
 
 $(foreach v,$(EXPORT_TO_SOONG),$(eval $(call addVar,$(v))))
+

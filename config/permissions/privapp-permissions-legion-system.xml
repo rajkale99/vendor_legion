@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2017-2019 The LineageOS Project
+<!-- Copyright (C) 2019 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,31 +13,13 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
 <permissions>
-
-    <privapp-permissions package="com.android.fmradio">
-        <permission name="android.permission.ACCESS_FM_RADIO"/>
-        <permission name="android.permission.MODIFY_AUDIO_ROUTING"/>
-        <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    </privapp-permissions>
-
-    <privapp-permissions package="com.legion.updater">
-        <permission name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
-        <permission name="android.permission.REBOOT"/>
-        <permission name="android.permission.RECOVERY"/>
-    </privapp-permissions>
 
     <privapp-permissions package="org.lineageos.snap">
         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+        <permission name="android.permission.PREVENT_POWER_KEY"/>
         <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
         <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
-        <permission name="lineage.permission.PREVENT_POWER_KEY"/>
-    </privapp-permissions>
-
-    <!-- Additional permissions for digital wellbeing -->
-    <privapp-permissions package="com.google.android.apps.wellbeing">
-        <permission name="android.permission.MODIFY_PHONE_STATE"/>
     </privapp-permissions>
 
 </permissions>
