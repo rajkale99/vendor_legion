@@ -17,12 +17,12 @@
 PRODUCT_PACKAGES += \
     BluetoothExt \
     Calendar \
-    ExactCalculator \
     LatinIME \
     Launcher3QuickStep \
     messaging \
     Stk \
-    Snap
+    Snap \
+    ThemePicker
 
 # World APN list
 PRODUCT_PACKAGES += \
