@@ -22,7 +22,8 @@ PRODUCT_PACKAGES += \
     messaging \
     Stk \
     Snap \
-    ThemePicker
+    ThemePicker \
+    WallpaperPicker2
 
 # World APN list
 PRODUCT_PACKAGES += \
