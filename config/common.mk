@@ -73,3 +73,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/privapp-permissions-legion-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-legion-system.xml \
     vendor/legion/config/permissions/privapp-permissions-legion-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-legion-product.xml
+
+# Gapps
+$(call inherit-product, vendor/legion/gapps.mk)
