@@ -72,7 +72,38 @@ endif
 
 PRODUCT_COPY_FILES += \
     vendor/legion/config/permissions/privapp-permissions-legion-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-legion-system.xml \
-    vendor/legion/config/permissions/privapp-permissions-legion-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-legion-product.xml
+    vendor/legion/config/permissions/privapp-permissions-legion-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-legion-product.xml \
+    vendor/legion/config/permissions/legion-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/legion-power-whitelist.xml \
+    vendor/legion/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-google_prebuilt.xml \
+    vendor/legion/config/permissions/wallpaper_privapp-permissions.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/wallpaper_privapp-permissions.xml
 
 # Gapps
 $(call inherit-product, vendor/legion/gapps.mk)
+
+ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.com.google.clientidbase=android-google
+else
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
+endif
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    keyguard.no_require_sim=true \
+    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
+    ro.com.google.clientidbase=android-google \
+    ro.com.android.wifi-watchlist=GoogleGuest \
+    ro.setupwizard.enterprise_mode=1 \
+    ro.setupwizard.network_required=false \
+    ro.setupwizard.gservices_delay=-1 \
+    ro.com.android.dataroaming=false \
+    drm.service.enabled=true \
+    net.tethering.noprovisioning=true \
+    persist.sys.dun.override=0 \
+    ro.build.selinux=1 \
+    ro.adb.secure=0 \
+    ro.setupwizard.rotation_locked=true \
+    ro.opa.eligible_device=true \
+    persist.sys.disable_rescue=true \
+    ro.config.calibration_cad=/system/etc/calibration_cad.xml
