@@ -4,22 +4,15 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.build.fingerprint=$(BUILD_FINGERPRINT)
 endif
 
-# LineageOS System Version
+# LegionOS System Version
 ADDITIONAL_BUILD_PROPERTIES += \
-    ro.lineage.version=$(LINEAGE_VERSION) \
-    ro.lineage.releasetype=$(LINEAGE_BUILDTYPE) \
-    ro.lineage.build.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
-    ro.modversion=$(LINEAGE_VERSION) \
-    ro.lineagelegal.url=https://lineageos.org/legal
-
-# LineageOS Platform Display Version
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.lineage.display.version=$(LINEAGE_DISPLAY_VERSION)
-
-# LineageOS Platform SDK Version
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.lineage.build.version.plat.sdk=$(LINEAGE_PLATFORM_SDK_VERSION)
-
-# LineageOS Platform Internal Version
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.lineage.build.version.plat.rev=$(LINEAGE_PLATFORM_REV)
+    ro.legion.buildtype=$(LEGION_BUILD_TYPE) \
+    ro.legion.build.date=$(LEGION_BUILD_DATE) \
+    ro.legion.display.version=$(LEGION_DISPLAY_VERSION) \
+    ro.legion.android_version=$(ANDROID_VERSION) \
+    ro.legion.releasetype=$(LEGION_BUILD_TYPE) \
+    ro.legionversion=$(LEGIONVERSION) \
+    ro.legion.version=$(LEGION_VERSION) \
+    ro.modversion=$(LEGION_MOD_VERSION) \
+    ro.legion.ziptype=$(LEGION_BUILD_ZIP_TYPE) \
+    org.legion.fingerprint=$(LEGION_FINGERPRINT)
