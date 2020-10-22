@@ -1,19 +1,15 @@
+# LegionOS functions that extend build/envsetup.sh
 function __print_legion_functions_help() {
 cat <<EOF
 Additional LegionOS functions:
 - cout:            Changes directory to out.
-- mmp:             Builds all of the modules in the current directory and pushes them to the device.
-- mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.
-- mmmp:            Builds all of the modules in the supplied directories and pushes them to the device.
-- legiongerrit:   A Git wrapper that fetches/pushes patch from/to LegionOS Gerrit Review.
-- legionrebase:   Rebase a Gerrit change and push it again.
-- legionremote:   Add git remote for LegionOS Gerrit Review.
+- lineagegerrit:   A Git wrapper that fetches/pushes patch from/to LineageOS Gerrit Review.
+- lineagerebase:   Rebase a Gerrit change and push it again.
+- lineagereview:   Add git remote for LineageOS Gerrit Review.
 - aospremote:      Add git remote for matching AOSP repository.
 - cafremote:       Add git remote for matching CodeAurora repository.
-- githubremote:    Add git remote for Project-Legion Github.
+- lineageremote:    Add git remote for LineageOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
-- mkap:            Builds the module(s) using mka and pushes them to the device.
-- cmka:            Cleans and builds using mka.
 - repodiff:        Diff 2 different branches or tags within the same repo
 - repolastsync:    Prints date and time of last repo sync.
 - reposync:        Parallel repo sync using ionice and SCHED_BATCH.
@@ -66,6 +62,15 @@ function breakfast()
 {
     target=$1
     local variant=$2
+    REVENGEOS_DEVICES_ONLY="true"
+    unset LUNCH_MENU_CHOICES
+    add_lunch_combo full-eng
+    for f in `/bin/ls vendor/legion/vendorsetup.sh 2> /dev/null`
+        do
+            echo "including $f"
+            . $f
+        done
+    unset f
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
@@ -76,7 +81,7 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the Legion model name
+            # This is probably just the LegionOS model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
@@ -88,12 +93,6 @@ function breakfast()
 }
 
 alias bib=breakfast
-
-function omnom()
-{
-    brunch $*
-    eat
-}
 
 function cout()
 {
@@ -204,43 +203,43 @@ function dddclient()
    fi
 }
 
-function legionremote()
+function lineagereview()
 {
     if ! git rev-parse --git-dir &> /dev/null
     then
         echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
-    git remote rm legion 2> /dev/null
+    git remote rm lineage 2> /dev/null
     local REMOTE=$(git config --get remote.github.projectname)
-    local LEGION="true"
+    local LINEAGE="true"
     if [ -z "$REMOTE" ]
     then
         REMOTE=$(git config --get remote.aosp.projectname)
-        LEGION="false"
+        LINEAGE="false"
     fi
     if [ -z "$REMOTE" ]
     then
         REMOTE=$(git config --get remote.caf.projectname)
-        LEGION="false"
+        LINEAGE="false"
     fi
 
-    if [ $LEGION = "false" ]
+    if [ $LINEAGE = "false" ]
     then
         local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
-        local PFX="LegionOS/"
+        local PFX="LineageOS/"
     else
         local PROJECT=$REMOTE
     fi
 
-    local LEGION_USER=$(git config --get review.review.msmlegion.org.username)
-    if [ -z "$LEGION_USER" ]
+    local LINEAGE_USER=$(git config --get review.review.lineageos.org.username)
+    if [ -z "$LINEAGE_USER" ]
     then
-        git remote add legion ssh://review.msmlegion.org:29418/$PFX$PROJECT
+        git remote add lineage ssh://review.lineageos.org:29418/$PFX$PROJECT
     else
-        git remote add legion ssh://$LEGION_USER@review.msmlegion.org:29418/$PFX$PROJECT
+        git remote add lineage ssh://$LINEAGE_USER@review.lineageos.org:29418/$PFX$PROJECT
     fi
-    echo "Remote 'legion' created"
+    echo "Remote 'lineage' created"
 }
 
 function aospremote()
@@ -263,27 +262,6 @@ function aospremote()
     fi
     git remote add aosp https://android.googlesource.com/$PFX$PROJECT
     echo "Remote 'aosp' created"
-}
-
-function githubremote()
-{
-    if ! git rev-parse --git-dir &> /dev/null
-    then
-        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    git remote rm github 2> /dev/null
-    local REMOTE=$(git config --get remote.aosp.projectname)
-
-    if [ -z "$REMOTE" ]
-    then
-        REMOTE=$(git config --get remote.caf.projectname)
-    fi
-
-    local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
-
-    git remote add github https://github.com/Project-Legion/$PROJECT
-    echo "Remote 'github' created"
 }
 
 function cafremote()
@@ -312,6 +290,27 @@ function cafremote()
     echo "Remote 'caf' created"
 }
 
+function lineageremote()
+{
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    git remote rm lineage 2> /dev/null
+    local REMOTE=$(git config --get remote.aosp.projectname)
+
+    if [ -z "$REMOTE" ]
+    then
+        REMOTE=$(git config --get remote.caf.projectname)
+    fi
+
+    local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
+
+    git remote add lineage https://github.com/LineageOS/$PROJECT
+    echo "Remote 'lineage' created"
+}
+
 function makerecipe() {
     if [ -z "$1" ]
     then
@@ -328,13 +327,13 @@ function makerecipe() {
     if [ "$REPO_REMOTE" = "github" ]
     then
         pwd
-        legionremote
-        git push legion HEAD:refs/heads/'$1'
+        lineageremote
+        git push lineage HEAD:refs/heads/'$1'
     fi
     '
 }
 
-function legiongerrit() {
+function lineagegerrit() {
     if [ "$(__detect_shell)" = "zsh" ]; then
         # zsh does not define FUNCNAME, derive from funcstack
         local FUNCNAME=$funcstack[1]
@@ -344,7 +343,7 @@ function legiongerrit() {
         $FUNCNAME help
         return 1
     fi
-    local user=`git config --get review.review.msmxteded.org.username`
+    local user=`git config --get review.review.lineageos.org.username`
     local review=`git config --get remote.github.review`
     local project=`git config --get remote.github.projectname`
     local command=$1
@@ -380,7 +379,7 @@ EOF
             case $1 in
                 __cmg_*) echo "For internal use only." ;;
                 changes|for)
-                    if [ "$FUNCNAME" = "legiongerrit" ]; then
+                    if [ "$FUNCNAME" = "lineagegerrit" ]; then
                         echo "'$FUNCNAME $1' is deprecated."
                     fi
                     ;;
@@ -473,7 +472,7 @@ EOF
                 $local_branch:refs/for/$remote_branch || return 1
             ;;
         changes|for)
-            if [ "$FUNCNAME" = "legiongerrit" ]; then
+            if [ "$FUNCNAME" = "lineagegerrit" ]; then
                 echo >&2 "'$FUNCNAME $command' is deprecated."
             fi
             ;;
@@ -572,15 +571,15 @@ EOF
     esac
 }
 
-function legionrebase() {
+function lineagerebase() {
     local repo=$1
     local refs=$2
     local pwd="$(pwd)"
     local dir="$(gettop)/$repo"
 
     if [ -z $repo ] || [ -z $refs ]; then
-        echo "LegionOS Gerrit Rebase Usage: "
-        echo "      legionrebase <path to project> <patch IDs on Gerrit>"
+        echo "LineageOS Gerrit Rebase Usage: "
+        echo "      lineagerebase <path to project> <patch IDs on Gerrit>"
         echo "      The patch IDs appear on the Gerrit commands that are offered."
         echo "      They consist on a series of numbers and slashes, after the text"
         echo "      refs/changes. For example, the ID in the following command is 26/8126/2"
@@ -601,7 +600,7 @@ function legionrebase() {
     echo "Bringing it up to date..."
     repo sync .
     echo "Fetching change..."
-    git fetch "http://review.msmlegion.org/p/$repo" "refs/changes/$refs" && git cherry-pick FETCH_HEAD
+    git fetch "http://review.lineageos.org/p/$repo" "refs/changes/$refs" && git cherry-pick FETCH_HEAD
     if [ "$?" != "0" ]; then
         echo "Error cherry-picking. Not uploading!"
         return
@@ -621,7 +620,7 @@ function cmka() {
     if [ ! -z "$1" ]; then
         for i in "$@"; do
             case $i in
-                legion|otapackage|bacon|systemimage)
+                legion|otapackage|systemimage)
                     mka installclean
                     mka $i
                     ;;
@@ -637,43 +636,11 @@ function cmka() {
     fi
 }
 
-function repolastsync() {
-    RLSPATH="$ANDROID_BUILD_TOP/.repo/.repo_fetchtimes.json"
-    RLSLOCAL=$(date -d "$(stat -c %z $RLSPATH)" +"%e %b %Y, %T %Z")
-    RLSUTC=$(date -d "$(stat -c %z $RLSPATH)" -u +"%e %b %Y, %T %Z")
-    echo "Last repo sync: $RLSLOCAL / $RLSUTC"
-}
-
-function reposync() {
-    repo sync -j 4 "$@"
-}
-
-function repodiff() {
-    if [ -z "$*" ]; then
-        echo "Usage: repodiff <ref-from> [[ref-to] [--numstat]]"
-        return
-    fi
-    diffopts=$* repo forall -c \
-      'echo "$REPO_PATH ($REPO_REMOTE)"; git diff ${diffopts} 2>/dev/null ;'
-}
-
-alias mmp='dopush mm'
-alias mmmp='dopush mmm'
-alias mmap='dopush mma'
-alias mmmap='dopush mmma'
-alias mkap='dopush mka'
-alias cmkap='dopush cmka'
-
-function repopick() {
-    T=$(gettop)
-    $T/vendor/legion/build/tools/repopick.py $@
-}
-
 function fixup_common_out_dir() {
     common_out_dir=$(get_build_var OUT_DIR)/target/common
     target_device=$(get_build_var TARGET_DEVICE)
-    common_target_out=common-${target_device}
-    if [ ! -z $LEGION_FIXUP_COMMON_OUT ]; then
+        common_target_out=common-${target_device}
+    if [ ! -z $REVENGE_FIXUP_COMMON_OUT ]; then
         if [ -d ${common_out_dir} ] && [ ! -L ${common_out_dir} ]; then
             mv ${common_out_dir} ${common_out_dir}-${target_device}
             ln -s ${common_target_out} ${common_out_dir}
@@ -687,3 +654,112 @@ function fixup_common_out_dir() {
         mkdir -p ${common_out_dir}
     fi
 }
+
+function repolastsync() {
+    RLSPATH="$ANDROID_BUILD_TOP/.repo/.repo_fetchtimes.json"
+    RLSLOCAL=$(date -d "$(stat -c %z $RLSPATH)" +"%e %b %Y, %T %Z")
+    RLSUTC=$(date -d "$(stat -c %z $RLSPATH)" -u +"%e %b %Y, %T %Z")
+    echo "Last repo sync: $RLSLOCAL / $RLSUTC"
+}
+
+function reposync() {
+    repo sync -c -f --force-sync --no-tags --no-clone-bundle -j$(nproc --all) --optimized-fetch --prune "$@"
+}
+
+function repodiff() {
+    if [ -z "$*" ]; then
+        echo "Usage: repodiff <ref-from> [[ref-to] [--numstat]]"
+        return
+    fi
+    diffopts=$* repo forall -c \
+      'echo "$REPO_PATH ($REPO_REMOTE)"; git diff ${diffopts} 2>/dev/null ;'
+}
+
+# Return success if adb is up and not in recovery
+function _adb_connected {
+    {
+        if [[ "$(adb get-state)" == device &&
+              "$(adb shell 'test -e /sbin/recovery; echo $?')" != 0 ]]
+        then
+            return 0
+        fi
+    } 2>/dev/null
+
+    return 1
+};
+
+function repopick() {
+    T=$(gettop)
+    $T/vendor/legion/build/tools/repopick.py $@
+}
+
+# check and set ccache path on envsetup
+if [ -z ${CCACHE_EXEC} ]; then
+    ccache_path=$(which ccache)
+    if [ ! -z "$ccache_path" ]; then
+        export CCACHE_EXEC="$ccache_path"
+        echo "ccache found and CCACHE_EXEC has been set to : $ccache_path"
+    else
+        echo "ccache not found/installed!"
+    fi
+fi
+
+function push_update(){(
+    set -e
+    a=()
+    devices_dir=$(pwd)/official_devices
+
+    if [ ! -f "$(pwd)/changelog.txt" ]; then
+        echo "Create changelog.txt file in build directory"
+        echo "Aborting..."
+        return 0
+    fi
+
+    # Ask the maintainer for login details
+    read -p 'ODSN Username: ' uservar
+    read -p 'Zip name: ' zipvar
+
+    for s in $(echo $zipvar | tr "-" "\n")
+    do
+        a+=("$s")
+    done
+
+    target_device=${a[4]}
+    out_dir=$(pwd)/out/target/product/$target_device/
+    version=${a[1]}
+    size=$(stat -c%s "$out_dir$zipvar")
+    md5=$(md5sum "$out_dir$zipvar")
+
+    echo "Uploading build to ODSN"
+
+    scp $out_dir/$zipvar ${uservar}@storage.osdn.net:/storage/groups/r/re/legion/$target_device
+
+    echo "Generating json"
+
+    python3 $(pwd)/vendor/legion/build/tools/generatejson.py $target_device $zipvar $version $size $md5
+
+    if [ -d "$devices_dir" ]; then
+        rm -rf $devices_dir
+    fi
+
+    git clone https://github.com/LegionOS-Devices/official_devices.git $devices_dir
+
+    if [ -d "$devices_dir/$target_device" ]; then
+        mv $(pwd)/device.json $devices_dir/$target_device
+        mv $(pwd)/changelog.txt $devices_dir/$target_device
+    else
+        mkdir $devices_dir/$target_device
+        mv $(pwd)/device.json $devices_dir/$target_device
+        mv $(pwd)/changelog.txt $devices_dir/$target_device
+    fi
+
+    echo "Pushing to Official devices"
+
+    cd $devices_dir
+    git add $target_device && git commit -m "Update $target_device"
+    git push https://github.com/LegionOS-Devices/official_devices.git HEAD:11
+    rm -rf $devices_dir
+)}
+
+# Allow GCC 4.9
+export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
